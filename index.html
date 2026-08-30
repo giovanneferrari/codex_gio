@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17130f">
+  <meta name="description" content="Painel de gestão da cafeteria RITO">
+  <title>RITO | Gestão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="brand-mark">R</span><div><strong>RITO</strong><small>GESTÃO</small></div></div>
+    <nav aria-label="Menu principal">
+      <button class="nav-item active" data-view="visao"><span>⌂</span> Visão geral</button>
+      <button class="nav-item" data-view="pedidos"><span>▤</span> Pedidos <b id="orderBadge">3</b></button>
+      <button class="nav-item" data-view="estoque"><span>□</span> Estoque</button>
+      <button class="nav-item" data-view="financeiro"><span>↗</span> Financeiro</button>
+      <button class="nav-item" data-view="custos"><span>◇</span> Custos</button>
+    </nav>
+    <div class="ritual-card"><span>◡</span><p>Todo bom dia<br>começa com um ritual.</p></div>
+    <div class="user"><div class="avatar">MR</div><div><strong>Marina Rocha</strong><small>Administradora</small></div><button aria-label="Mais opções">•••</button></div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <button class="menu" id="menuBtn" aria-label="Abrir menu">☰</button>
+      <div><p class="eyebrow" id="dateLabel"></p><h1 id="pageTitle">Bom dia, Marina.</h1><p class="subtitle">Aqui está o pulso do seu negócio hoje.</p></div>
+      <div class="header-actions"><button class="period" id="periodBtn">Este mês <span>⌄</span></button><button class="primary" id="newOrderBtn"><span>＋</span> Novo pedido</button></div>
+    </header>
+
+    <section class="view active" id="visao">
+      <div class="metrics">
+        <article class="metric"><div class="metric-head"><span class="metric-icon gold">↗</span><small>Receita total</small><i class="positive">+12,5%</i></div><strong id="revenueMetric">R$ 28.450</strong><p>vs. R$ 25.289 mês anterior</p></article>
+        <article class="metric"><div class="metric-head"><span class="metric-icon green">▤</span><small>Pedidos</small><i class="positive">+8,2%</i></div><strong id="ordersMetric">486</strong><p>37 pedidos hoje</p></article>
+        <article class="metric"><div class="metric-head"><span class="metric-icon cream">○</span><small>Ticket médio</small><i class="positive">+3,9%</i></div><strong id="ticketMetric">R$ 58,54</strong><p>meta mensal: R$ 60,00</p></article>
+        <article class="metric"><div class="metric-head"><span class="metric-icon brown">◇</span><small>Custos</small><i class="negative">+4,1%</i></div><strong>R$ 11.280</strong><p>39,6% da receita</p></article>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="panel revenue-panel"><div class="panel-title"><div><h2>Receita</h2><p>Evolução nos últimos 7 dias</p></div><strong>R$ 8.940 <small>＋ 14,2%</small></strong></div><div class="chart-wrap"><div class="y-axis"><span>2k</span><span>1,5k</span><span>1k</span><span>500</span><span>0</span></div><svg class="line-chart" viewBox="0 0 720 225" preserveAspectRatio="none" aria-label="Gráfico de receita semanal"><defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b77c3b" stop-opacity=".3"/><stop offset="1" stop-color="#b77c3b" stop-opacity="0"/></linearGradient></defs><g class="grid-lines"><line x1="0" y1="12" x2="720" y2="12"/><line x1="0" y1="62" x2="720" y2="62"/><line x1="0" y1="112" x2="720" y2="112"/><line x1="0" y1="162" x2="720" y2="162"/><line x1="0" y1="212" x2="720" y2="212"/></g><path class="area" d="M0 170 C55 158 75 117 120 135 S185 110 240 120 S320 84 360 98 S430 72 480 85 S555 30 600 59 S675 20 720 18 L720 212 L0 212Z"/><path class="line" d="M0 170 C55 158 75 117 120 135 S185 110 240 120 S320 84 360 98 S430 72 480 85 S555 30 600 59 S675 20 720 18"/><g class="dots"><circle cx="0" cy="170" r="4"/><circle cx="120" cy="135" r="4"/><circle cx="240" cy="120" r="4"/><circle cx="360" cy="98" r="4"/><circle cx="480" cy="85" r="4"/><circle cx="600" cy="59" r="4"/><circle cx="720" cy="18" r="4"/></g></svg><div class="x-axis"><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span></div></div></article>
+
+        <article class="panel projection"><div class="panel-title"><div><h2>Projeção do mês</h2><p>Baseada no ritmo atual</p></div><span class="trend-icon">↗</span></div><div class="projection-value"><strong>R$ 42.680</strong><span>84%</span></div><div class="progress"><span></span></div><div class="projection-legend"><div><small>Realizado</small><b>R$ 28.450</b></div><div><small>Meta</small><b>R$ 50.000</b></div></div><div class="insight"><span>✦</span><p><strong>Ritmo positivo</strong><br>Você pode superar a meta em <b>R$ 2.680</b> mantendo o ritmo atual.</p></div></article>
+
+        <article class="panel orders-panel"><div class="panel-title"><div><h2>Pedidos recentes</h2><p>Últimas movimentações</p></div><button class="link" data-go="pedidos">Ver todos →</button></div><div id="recentOrders"></div></article>
+        <article class="panel stock-panel"><div class="panel-title"><div><h2>Estoque</h2><p>Itens que precisam de atenção</p></div><button class="link" data-go="estoque">Ver estoque →</button></div><div id="stockAlerts"></div></article>
+      </div>
+    </section>
+
+    <section class="view" id="pedidos"><div class="section-heading"><div><h2>Pedidos</h2><p>Acompanhe e atualize os pedidos da operação.</p></div><button class="primary open-order">＋ Novo pedido</button></div><article class="panel table-panel"><table><thead><tr><th>Pedido</th><th>Cliente</th><th>Itens</th><th>Valor</th><th>Horário</th><th>Status</th></tr></thead><tbody id="ordersTable"></tbody></table></article></section>
+    <section class="view" id="estoque"><div class="section-heading"><div><h2>Estoque</h2><p>Controle de insumos e níveis de reposição.</p></div><button class="primary" id="stockAdd">＋ Novo item</button></div><div class="inventory-grid" id="inventoryGrid"></div></section>
+    <section class="view" id="financeiro"><div class="section-heading"><div><h2>Financeiro</h2><p>Receitas, margem e projeção em um só lugar.</p></div><button class="period">Agosto 2026⌄</button></div><div class="finance-grid"><article class="panel big-number"><span>RECEITA LÍQUIDA</span><strong>R$ 17.170</strong><p>Margem de 60,4% no período</p></article><article class="panel big-number dark"><span>PROJEÇÃO DE LUCRO</span><strong>R$ 25.780</strong><p>＋ 11,3% acima do mês anterior</p></article><article class="panel category-list"><h2>Receita por categoria</h2><div><span>Cafés quentes</span><b>R$ 13.940 · 49%</b></div><div><span>Bebidas geladas</span><b>R$ 7.680 · 27%</b></div><div><span>Comidas</span><b>R$ 5.120 · 18%</b></div><div><span>Outros</span><b>R$ 1.710 · 6%</b></div></article></div></section>
+    <section class="view" id="custos"><div class="section-heading"><div><h2>Custos</h2><p>Entenda onde a operação está investindo.</p></div><button class="primary" id="costAdd">＋ Registrar custo</button></div><div class="cost-layout"><article class="panel donut-card"><div class="donut"><div><strong>R$ 11.280</strong><small>Total</small></div></div></article><article class="panel category-list"><h2>Composição dos custos</h2><div><span><i class="dot d1"></i>Insumos</span><b>R$ 4.625 · 41%</b></div><div><span><i class="dot d2"></i>Equipe</span><b>R$ 3.384 · 30%</b></div><div><span><i class="dot d3"></i>Estrutura</span><b>R$ 2.030 · 18%</b></div><div><span><i class="dot d4"></i>Outros</span><b>R$ 1.241 · 11%</b></div></article></div></section>
+  </main>
+
+  <dialog id="orderDialog"><form method="dialog" id="orderForm"><div class="dialog-head"><div><span>NOVO RITUAL</span><h2>Adicionar pedido</h2></div><button value="cancel" aria-label="Fechar">×</button></div><label>Nome do cliente<input name="client" placeholder="Ex.: Ana Souza" required></label><label>Itens do pedido<input name="items" placeholder="Ex.: 2× Cappuccino" required></label><div class="form-row"><label>Valor (R$)<input name="value" type="number" step="0.01" min="0" placeholder="0,00" required></label><label>Status<select name="status"><option>Preparando</option><option>Pronto</option><option>Entregue</option></select></label></div><button class="primary submit" value="default">Adicionar pedido</button></form></dialog>
+  <div class="toast" id="toast">Alteração salva com sucesso.</div>
+  <script src="app.js"></script>
+</body>
+</html>

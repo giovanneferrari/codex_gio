@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f3eee7">
+  <meta name="description" content="RITO 2.0 — operação mobile da cafeteria">
+  <title>RITO 2.0 | Pedidos</title>
+  <link rel="icon" href="../assets/rito-monograma.png">
+  <link rel="apple-touch-icon" href="../assets/rito-monograma.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+  <main class="mobile-shell">
+    <header class="app-header">
+      <div class="brand"><img src="../assets/rito-monograma.png" alt="RITO"><span><strong>RITO</strong><small>OPERAÇÃO 2.0</small></span></div>
+      <div class="header-actions"><button class="admin-button" id="adminButton" type="button" aria-label="Ir para a visão administrativa">ADM</button><button class="create-button" id="newOrderButton" type="button" aria-label="Criar novo pedido"><span></span></button></div>
+    </header>
+
+    <section class="hero">
+      <p id="todayLabel"></p>
+      <h1>Pedidos</h1>
+      <div class="pulse"><i></i><span id="queueSummary">Carregando a operação...</span></div>
+    </section>
+
+    <section class="period-filter"><div><strong id="periodTitle">Pedidos de hoje</strong><small>Filtre a fila pela data do pedido</small></div><div class="period-buttons"><button class="active" data-period="today">Hoje</button><button data-period="7d">7 dias</button><button data-period="month">Mês</button><button data-period="all">Tudo</button><button data-period="custom">Período</button></div></section>
+
+    <nav class="tabs" aria-label="Visualização dos pedidos">
+      <button class="active" type="button" data-tab="active">Em andamento <b id="activeCount">0</b></button>
+      <button type="button" data-tab="done">Finalizados <b id="doneCount">0</b></button>
+    </nav>
+
+    <section class="wallet" id="wallet" aria-live="polite"></section>
+  </main>
+
+  <section class="auth-gate" id="authGate" hidden>
+    <img src="../assets/rito-logo-transparent.png" alt="RITO — Mais que café, um ritual">
+    <h1>Acesse primeiro sua conta</h1>
+    <p>A versão 2 utiliza o mesmo acesso do ambiente atual.</p>
+    <a href="../">Ir para o login</a>
+  </section>
+
+  <dialog id="orderDialog">
+    <form id="orderForm">
+      <header><div><small id="orderEyebrow">NOVO PEDIDO</small><h2 id="orderTitle">Monte o pedido</h2></div><button type="button" id="closeOrder" aria-label="Fechar">×</button></header>
+      <label>Cliente (opcional)<input name="client" maxlength="80" placeholder="Ex.: Ana Souza"></label>
+      <div class="form-grid temporal"><label>Data<input name="orderDate" type="date" required></label><label>Horário<input name="orderTime" type="time" step="60" required></label></div>
+      <fieldset><legend>Cardápio</legend><div class="product-grid" id="productGrid"></div></fieldset>
+      <div class="total-box"><div><small>VALOR CALCULADO</small><strong id="calculatedTotal">R$ 0,00</strong></div><label>Valor confirmado (R$)<input name="value" id="confirmedTotal" type="number" min="0" step="0.01" required></label></div>
+      <div class="form-grid"><label>Forma de pagamento<select name="payment" id="paymentSelect" required></select></label><label>Status<select name="status" required><option>A fazer</option><option>Em preparo</option><option>Finalizado</option></select></label></div>
+      <p class="form-error" id="orderError"></p>
+      <footer><button class="secondary" type="button" id="cancelOrder">Cancelar</button><button class="primary" type="submit" id="orderSubmit">Criar pedido</button></footer>
+    </form>
+  </dialog>
+
+  <dialog class="compact-dialog" id="dateDialog"><form id="dateForm"><header><div><small>PERÍODO PERSONALIZADO</small><h2>Filtrar pedidos</h2></div><button type="button" id="closeDate" aria-label="Fechar">×</button></header><div class="form-grid temporal"><label>Data inicial<input name="start" type="date" required></label><label>Data final<input name="end" type="date"></label></div><p class="form-error" id="dateError"></p><footer><button class="secondary" type="button" id="cancelDate">Cancelar</button><button class="primary" type="submit">Aplicar filtro</button></footer></form></dialog>
+
+  <dialog class="confirm-dialog" id="finalizeDialog"><form method="dialog"><span class="confirm-icon">✓</span><h2>Finalizar este pedido?</h2><p id="finalizeText">Ele será movido para a aba de finalizados.</p><footer><button class="secondary" value="cancel">Voltar</button><button class="primary" id="confirmFinalize" value="default">Sim, finalizar</button></footer></form></dialog>
+
+  <dialog class="confirm-dialog" id="adminDialog"><form method="dialog"><span class="confirm-icon admin">↗</span><h2>Abrir a visão administrativa?</h2><p>Você sairá do fluxo operacional e irá para o dashboard completo.</p><footer><button class="secondary" value="cancel">Permanecer aqui</button><button class="primary" id="confirmAdmin" value="default">Ir para o dashboard</button></footer></form></dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js?v=3"></script>
+</body>
+</html>

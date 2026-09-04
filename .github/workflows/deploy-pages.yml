@@ -32,6 +32,7 @@ jobs:
           mkdir -p _site
           cp index.html styles.css app.js .nojekyll _site/
           cp -R assets _site/assets
+          cp -R rev2 _site/rev2
 
       - name: Enviar os arquivos
         uses: actions/upload-pages-artifact@v3

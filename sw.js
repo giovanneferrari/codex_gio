@@ -1,5 +1,5 @@
-const CACHE_NAME='rito-shell-v1';
-const APP_SHELL=['./','./index.html','./styles.css?v=icons-7','./app.js?v=cards-1','./manifest.webmanifest','./assets/rito-logo-transparent.png?v=1','./assets/rito-monograma.png','./assets/icons/icon-192.png','./assets/icons/icon-512.png','./assets/icons/apple-touch-icon.png'];
+const CACHE_NAME='rito-shell-v2';
+const APP_SHELL=['./','./index.html','./styles.css?v=icons-7','./app.js?v=cards-1','./manifest.webmanifest?v=2','./assets/rito-logo-transparent.png?v=1','./assets/rito-monograma.png','./assets/icons/icon-192.png?v=2','./assets/icons/icon-512.png?v=2','./assets/icons/apple-touch-icon.png?v=2'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL)));

@@ -2,9 +2,9 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="theme-color" content="#17130f">
-  <meta name="application-name" content="RITO"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="RITO">
+  <meta name="application-name" content="RITO"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="RITO">
   <meta name="description" content="RITO — gestão simples para cafeterias"><title>RITO | Gestão da cafeteria</title>
-  <link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" href="assets/icons/icon-192.png"><link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest?v=2"><link rel="icon" type="image/png" href="assets/icons/icon-192.png?v=2"><link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css?v=icons-7">
 </head>
@@ -27,7 +27,6 @@
     <aside class="sidebar" id="sidebar">
       <div class="brand"><img class="brand-mark" src="assets/rito-monograma.png" alt="Monograma RITO"><div><strong>RITO</strong><small>GESTÃO</small></div></div>
       <nav aria-label="Menu principal"><button class="nav-item active admin-only" data-view="dashboard"><span>⌂</span> Dashboard</button><button class="nav-item" data-view="pedidos"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg> Pedidos <b id="orderBadge">0</b></button><button class="nav-item" data-view="estoque"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5zM4 7.5l8 4.5 8-4.5M12 12v9"/></svg> Estoque</button><button class="nav-item admin-only" data-view="financeiro"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16M7 15l4-4 3 2 5-6M16 7h3v3"/></svg> Financeiro</button><button class="nav-item admin-only" data-view="configuracoes"><span>⚙</span> Configurações</button><button class="nav-item sidebar-closing" id="stockClosingBtn" type="button"><span>✓</span> Fechamento do dia</button></nav>
-      <div class="sidebar-note admin-only"><span>✦</span><p><strong>Ritual do dia</strong><br>Mantenha o Kanban atualizado para ter indicadores precisos.</p></div>
       <button class="mode-switch" id="modeSwitch" type="button"><span>⇄</span><span><small>AMBIENTE ATUAL</small><strong id="modeSwitchLabel">Administrativo</strong></span></button>
       <div class="user"><button class="user-profile" id="profileBtn" type="button" aria-label="Abrir configurações do perfil"><span class="avatar" id="userAvatar">A</span><span><strong id="userName">Admin</strong><small id="userRole">Administrador</small></span></button><button id="logoutBtn" title="Sair" aria-label="Sair">↪</button></div>
     </aside>

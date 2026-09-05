@@ -5,7 +5,7 @@ A função recebe o webhook de uma nova linha em `stock_closings`, calcula o res
 Secrets necessários no Supabase:
 
 - `CLOSING_WEBHOOK_SECRET`
-- `SUPABASE_SERVICE_ROLE_KEY`
+- `RITO_SUPABASE_SECRET_KEY` (uma Secret key do projeto, nunca a chave pública)
 - `WHATSAPP_GRAPH_VERSION`
 - `WHATSAPP_ACCESS_TOKEN`
 - `WHATSAPP_PHONE_NUMBER_ID`

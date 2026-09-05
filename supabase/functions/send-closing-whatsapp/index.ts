@@ -22,7 +22,7 @@ Deno.serve(async (request) => {
     const closingDate = payload?.record?.closing_date
     if (!closingDate) return new Response('Closing date not found', { status: 400 })
 
-    const supabase = createClient(required('SUPABASE_URL'), required('SUPABASE_SERVICE_ROLE_KEY'))
+    const supabase = createClient(required('SUPABASE_URL'), required('RITO_SUPABASE_SECRET_KEY'))
     const start = new Date(`${closingDate}T03:00:00.000Z`)
     const end = new Date(start)
     end.setUTCDate(end.getUTCDate() + 1)

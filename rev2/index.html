@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
   <main class="mobile-shell">
@@ -27,6 +27,12 @@
     </section>
 
     <section class="period-filter"><div><strong id="periodTitle">Pedidos de hoje</strong><small>Filtre a fila pela data do pedido</small></div><div class="period-buttons"><button class="active" data-period="today">Hoje</button><button data-period="7d">7 dias</button><button data-period="month">Mês</button><button data-period="all">Tudo</button><button data-period="custom">Período</button></div></section>
+
+    <section class="operation-toolbar">
+      <div class="segmented" aria-label="Modo da operação"><button class="active" data-operation="service">Serviço</button><button data-operation="event">Evento</button></div>
+      <div class="segmented" aria-label="Formato de visualização"><button class="active" data-view="cards">Cards</button><button data-view="kanban">Kanban</button></div>
+    </section>
+    <section class="operation-summary"><div><small>PRODUTOS NO PERÍODO</small><strong id="productCount">0</strong></div><div><small>ESTOQUE</small><strong id="stockSummary">Aguardando configuração</strong></div></section>
 
     <nav class="tabs" aria-label="Visualização dos pedidos">
       <button class="active" type="button" data-tab="active">Em andamento <b id="activeCount">0</b></button>
@@ -62,8 +68,12 @@
 
   <dialog class="confirm-dialog" id="adminDialog"><form method="dialog"><span class="confirm-icon admin">↗</span><h2>Abrir a visão administrativa?</h2><p>Você sairá do fluxo operacional e irá para o dashboard completo.</p><footer><button class="secondary" value="cancel">Permanecer aqui</button><button class="primary" id="confirmAdmin" value="default">Ir para o dashboard</button></footer></form></dialog>
 
+  <dialog class="compact-dialog" id="eventDialog"><form id="eventForm"><header><div><small>MODO EVENTO</small><h2>Configurar evento</h2></div><button type="button" id="closeEvent" aria-label="Fechar">×</button></header><label>Nome do evento<input name="name" maxlength="100" required placeholder="Ex.: Casamento — 05/09"></label><fieldset><legend>Cardápio planejado</legend><p class="field-hint">Digite diretamente a quantidade combinada de cada produto.</p><div class="event-menu-grid" id="eventProductGrid"></div></fieldset><label>Receita (R$)<input name="revenue" type="number" min="0" step="0.01" value="0"></label><label>Custo manual (R$)<input name="cost" type="number" min="0" step="0.01" value="0"><small>Os pedidos começam zerados; valores extras digitados em cada pedido também serão contabilizados.</small></label><label class="check-row"><input name="negative" type="checkbox" checked> Permitir estoque negativo e sinalizar reposição</label><p class="form-error" id="eventError"></p><footer><button class="secondary" type="button" id="cancelEvent">Cancelar</button><button class="primary" type="submit">Iniciar evento</button></footer></form></dialog>
+
+  <dialog class="compact-dialog event-close-dialog" id="eventCloseDialog"><form id="eventCloseForm"><header><div><small>FECHAMENTO DO EVENTO</small><h2 id="eventCloseTitle">Encerrar evento</h2></div><button type="button" id="closeEventClose" aria-label="Fechar">×</button></header><div class="event-close-summary"><div><small>TOTAL SERVIDO</small><strong id="eventServedTotal">0 produtos</strong></div><div><small>PEDIDOS REGISTRADOS</small><strong id="eventOrdersTotal">0 pedidos</strong></div></div><p class="field-hint">Confirme ou ajuste as quantidades efetivamente servidas.</p><div class="event-product-summary" id="eventProductSummary"></div><div class="form-grid"><label>Total servido<input name="served" type="number" min="0" step="1" required></label><label>Receita confirmada (R$)<input name="revenue" type="number" min="0" step="0.01" value="0" required></label></div><label>Custo manual final (R$)<input name="cost" type="number" min="0" step="0.01" value="0" required></label><p class="close-note">Ao salvar, o evento será encerrado e sua receita entrará no sistema como um único fechamento. Os pedidos continuarão no histórico.</p><p class="form-error" id="eventCloseError"></p><footer class="event-close-actions"><button class="danger-secondary" type="button" id="cancelWholeEvent">Cancelar evento</button><button class="secondary" type="button" id="cancelEventClose">Continuar no evento</button><button class="primary" type="submit">Salvar e encerrar</button></footer></form></dialog>
+
   <div class="toast" id="toast" role="status"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>

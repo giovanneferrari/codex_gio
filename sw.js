@@ -1,5 +1,5 @@
-const CACHE_NAME='rito-shell-v24';
-const APP_SHELL=['./','./index.html','./styles.css?v=unit-flow-24','./app.js?v=unit-flow-24','./manifest.webmanifest?v=3','./assets/rito-logo-transparent.png?v=1','./assets/rito-monograma.png','./assets/icons/icon-192.png?v=3','./assets/icons/icon-512.png?v=3','./assets/icons/apple-touch-icon.png?v=3'];
+const CACHE_NAME='rito-shell-v25';
+const APP_SHELL=['./','./index.html','./styles.css?v=ux-push-25','./app.js?v=ux-push-25','./manifest.webmanifest?v=3','./assets/rito-logo-transparent.png?v=1','./assets/rito-monograma.png','./assets/icons/icon-192.png?v=3','./assets/icons/icon-512.png?v=3','./assets/icons/apple-touch-icon.png?v=3'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL)));
@@ -25,4 +25,15 @@ self.addEventListener('fetch',event=>{
     if(response.ok){const copy=response.clone();caches.open(CACHE_NAME).then(cache=>cache.put(request,copy))}
     return response;
   })));
+});
+
+self.addEventListener('push',event=>{
+  const message=event.data?.json()||{};
+  event.waitUntil(self.registration.showNotification(message.title||'RITO',{body:message.body||'O fechamento foi atualizado.',icon:'./assets/icons/icon-192.png?v=3',badge:'./assets/icons/icon-192.png?v=3',data:message.data||{url:'./'}}));
+});
+
+self.addEventListener('notificationclick',event=>{
+  event.notification.close();
+  const target=new URL(event.notification.data?.url||'./',self.location.origin).href;
+  event.waitUntil(clients.matchAll({type:'window',includeUncontrolled:true}).then(windows=>{const opened=windows[0];if(opened){opened.navigate(target);return opened.focus()}return clients.openWindow(target)}));
 });

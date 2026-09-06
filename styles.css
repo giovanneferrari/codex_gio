@@ -125,6 +125,8 @@ html,body{max-width:100%;overflow-x:hidden}
 
 @media(max-width:760px){
   .recurring-delete-options{grid-template-columns:1fr}
+  #orderDialog[open]{inset:calc(env(safe-area-inset-top) + 8px) 10px calc(env(safe-area-inset-bottom) + 8px);width:calc(100% - 20px);height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px);max-height:none;margin:auto;overflow:hidden}
+  #orderDialog form{height:100%;max-height:none;padding-top:24px;padding-bottom:calc(20px + env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
   .day-closing-dialog[open]{inset:env(safe-area-inset-top) 10px env(safe-area-inset-bottom);width:calc(100% - 20px);height:auto;max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px);margin:auto}
   .day-closing-dialog form{padding-bottom:calc(20px + env(safe-area-inset-bottom))}
 }

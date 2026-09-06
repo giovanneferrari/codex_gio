@@ -38,12 +38,21 @@ Deno.serve(async (request) => {
 
     webpush.setVapidDetails(Deno.env.get('VAPID_SUBJECT') || 'mailto:admin@ritocafe.shop', Deno.env.get('VAPID_PUBLIC_KEY')!, Deno.env.get('VAPID_PRIVATE_KEY')!);
     const expired: string[] = [];
+    let sent = 0;
+    const failures: Array<{ status: number; reason: string }> = [];
     await Promise.all((subscriptionsResult.data || []).map(async subscription => {
-      try { await webpush.sendNotification({ endpoint: subscription.endpoint, keys: { p256dh: subscription.p256dh, auth: subscription.auth } }, payload); }
-      catch (error: any) { if ([404, 410].includes(error?.statusCode)) expired.push(subscription.endpoint); else console.error(error); }
+      try {
+        await webpush.sendNotification({ endpoint: subscription.endpoint, keys: { p256dh: subscription.p256dh, auth: subscription.auth } }, payload);
+        sent += 1;
+      } catch (error: any) {
+        const status = Number(error?.statusCode || 500);
+        if ([404, 410].includes(status)) expired.push(subscription.endpoint);
+        failures.push({ status, reason: String(error?.body || error?.message || 'Falha desconhecida').slice(0, 240) });
+        console.error('Web Push rejeitado', { status, body: error?.body, endpointHost: new URL(subscription.endpoint).hostname });
+      }
     }));
     if (expired.length) await db.from('push_subscriptions').delete().in('endpoint', expired);
-    return new Response(JSON.stringify({ sent: (subscriptionsResult.data || []).length - expired.length }), { headers: { ...cors, 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ attempted: (subscriptionsResult.data || []).length, sent, failed: failures.length, failures }), { headers: { ...cors, 'Content-Type': 'application/json' } });
   } catch (error: any) {
     return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { ...cors, 'Content-Type': 'application/json' } });
   }

@@ -242,7 +242,7 @@ body.kanban-dragging{overflow:hidden;-webkit-user-select:none;user-select:none}
 @media(max-width:1000px){#financeiro.view.active{display:block}#financeiro>.section-heading{margin-bottom:20px}#financeiro>.finance-period-bar{margin-bottom:18px}#financeiro>.finance-metrics{margin-bottom:18px}#financeiro>.finance-chart-panel{margin-bottom:18px}.finance-chart-wrap,.finance-chart{max-height:none}}
 
 /* Refinamentos de navegação, financeiro e confirmações */
-#estoque>.section-heading>div,#financeiro>.section-heading>div{display:none}
+#estoque>.section-heading>div:first-child,#financeiro>.section-heading>div:first-child{display:none}
 #estoque>.section-heading,#financeiro>.section-heading{justify-content:flex-end}
 #stockAdjustBtn{display:none!important}
 .payment-setting-icon svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}

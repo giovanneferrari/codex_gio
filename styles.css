@@ -149,9 +149,9 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 
 /* Seletores de unidade para receitas e entradas de estoque */
-.recipe-measure,.quantity-unit-field{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:6px}
+.recipe-measure,.quantity-unit-field{display:grid;grid-template-columns:minmax(0,1fr) 88px;gap:6px}
 .recipe-measure input{padding:9px!important}
-.recipe-measure select,.quantity-unit-field select{min-width:0;padding:9px 7px;background:#fff;color:#8b5d34;font-weight:700}
+.recipe-measure select,.quantity-unit-field select{min-width:88px;padding:9px 26px 9px 8px;background:#fff;color:#8b5d34;font-weight:700;text-align:center;text-align-last:center}
 
 /* Login editorial RITO */
 .login-screen{min-height:100svh;grid-template-columns:minmax(360px,.92fr) minmax(520px,1.08fr);background:#f8f4ee}

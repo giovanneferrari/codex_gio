@@ -1,5 +1,5 @@
-const CACHE_NAME='rito-shell-v37';
-const APP_SHELL=['./','./index.html','./styles.css?v=event-cycle-37','./app.js?v=event-cycle-37','./manifest.webmanifest?v=4','./assets/rito-logo-transparent.png?v=1','./assets/rito-monograma.png','./assets/icons/favicon-32.png?v=5','./assets/icons/favicon-64.png?v=5','./assets/icons/icon-192.png?v=4','./assets/icons/icon-512.png?v=4','./assets/icons/apple-touch-icon.png?v=4'];
+const CACHE_NAME='rito-shell-v39';
+const APP_SHELL=['./','./index.html','./styles.css?v=event-cycle-38','./app.js?v=event-cycle-38','./manifest.webmanifest?v=5','./assets/rito-logo-transparent.png?v=1','./assets/rito-monograma.png','./assets/icons/favicon-32.png?v=5','./assets/icons/favicon-64.png?v=5','./assets/icons/icon-192.png?v=5','./assets/icons/icon-512.png?v=5','./assets/icons/apple-touch-icon.png?v=5'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL)));
@@ -29,7 +29,7 @@ self.addEventListener('fetch',event=>{
 
 self.addEventListener('push',event=>{
   const message=event.data?.json()||{};
-  event.waitUntil(self.registration.showNotification(message.title||'RITO',{body:message.body||'O fechamento foi atualizado.',icon:'./assets/icons/icon-192.png?v=4',badge:'./assets/icons/icon-192.png?v=4',data:message.data||{url:'./'}}));
+  event.waitUntil(self.registration.showNotification(message.title||'RITO',{body:message.body||'O fechamento foi atualizado.',icon:'./assets/icons/icon-192.png?v=5',badge:'./assets/icons/icon-192.png?v=5',data:message.data||{url:'./'}}));
 });
 
 self.addEventListener('notificationclick',event=>{

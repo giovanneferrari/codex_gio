@@ -1,5 +1,5 @@
-const CACHE_NAME='rito-shell-v42';
-const APP_SHELL=['./','./index.html','./styles.css?v=event-cycle-41','./app.js?v=event-cycle-41','./manifest.webmanifest?v=5','./assets/rito-logo-transparent.png?v=1','./assets/rito-monograma.png','./assets/icons/favicon-32.png?v=5','./assets/icons/favicon-64.png?v=5','./assets/icons/icon-192.png?v=5','./assets/icons/icon-512.png?v=5','./assets/icons/apple-touch-icon.png?v=5'];
+const CACHE_NAME='rito-shell-v44';
+const APP_SHELL=['./','./index.html','./styles.css?v=event-cycle-43','./app.js?v=event-cycle-43','./manifest.webmanifest?v=5','./assets/rito-logo-transparent.png?v=1','./assets/rito-monograma.png','./assets/icons/favicon-32.png?v=5','./assets/icons/favicon-64.png?v=5','./assets/icons/icon-192.png?v=5','./assets/icons/icon-512.png?v=5','./assets/icons/apple-touch-icon.png?v=5'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL)));
@@ -17,7 +17,7 @@ self.addEventListener('fetch',event=>{
   const url=new URL(request.url);
   if(url.hostname.endsWith('.supabase.co'))return;
   if(request.mode==='navigate'){
-    event.respondWith(fetch(request).catch(()=>caches.match('./index.html')));
+    event.respondWith(fetch(request,{cache:'no-store'}).catch(()=>caches.match('./index.html')));
     return;
   }
   if(url.origin!==self.location.origin)return;

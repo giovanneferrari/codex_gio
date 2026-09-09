@@ -304,3 +304,29 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
   .day-summary-numbers{grid-template-columns:1fr 1fr}
   .inventory-card>i{font-size:9px}
 }
+
+/* Escala tipográfica RITO: legibilidade consistente em desktop e mobile. */
+:root{--type-caption:11px;--type-small:12px;--type-body:14px;--type-label:14px;--type-card:15px;--type-section:18px;--type-page:30px}
+.subtitle,.section-heading p{font-size:var(--type-body)}.panel-title h2{font-size:var(--type-card)}.panel-title p{font-size:var(--type-caption)}
+.orders-table th{font-size:10px}.orders-table td{font-size:11px}.setting-row strong{font-size:13px}.setting-row small{font-size:11px}.setting-actions button,.table-action{font-size:11px}
+.metric-head small,.finance-metrics small,.stock-metrics small,.cash-metrics small{font-size:10px}.metric>p,.balance-card p,.cash-balance-card p{font-size:11px;line-height:1.45}
+.rito-select-trigger strong,.rito-select-menu strong{font-size:13px}.rito-select-trigger small,.rito-select-menu small{font-size:11px}.finance-choice-buttons button,.order-choice-buttons button{font-size:12px}
+.inventory-card small{font-size:10px}.inventory-card strong{font-size:15px}.inventory-card em{font-size:11px}.inventory-card>i{font-size:10px}.cash-kind,.finance-type,.recurring-label{font-size:10px}
+
+@media(max-width:760px){
+  :root{--type-caption:12px;--type-small:13px;--type-body:15px;--type-label:15px;--type-card:17px;--type-section:20px;--type-page:28px}
+  body{font-size:var(--type-body)}.topbar h1{font-size:var(--type-page)}.subtitle,.section-heading p{font-size:var(--type-body);line-height:1.5}.section-heading h2{font-size:var(--type-section)}
+  .eyebrow,.dialog-head span{font-size:12px}.dialog-head h2{font-size:26px}.dialog-head p{font-size:14px;line-height:1.5}.login-card label,dialog label{font-size:var(--type-label)}legend{font-size:var(--type-label)}
+  .primary,.secondary,.danger-button,.table-action,.compact-button{min-height:44px;font-size:14px}.dialog-head>button{width:44px;height:44px;font-size:24px}
+  .panel-title h2{font-size:var(--type-card)}.panel-title p{font-size:var(--type-small);line-height:1.45}.filter-bar strong,.orders-period-bar strong{font-size:15px}.filter-bar span,.orders-period-bar span{font-size:13px}
+  .metric-head small,.finance-metrics small,.stock-metrics small,.cash-metrics small{font-size:12px}.metric>strong,.finance-metrics strong,.stock-metrics strong,.cash-metrics strong{font-size:24px}.metric>p,.balance-card p,.cash-balance-card p{font-size:13px}
+  .orders-table th{font-size:11px}.orders-table td{font-size:13px;line-height:1.45}.finance-type,.cash-kind,.recurring-label,.movement-type{font-size:11px}.table-row-actions{gap:8px}
+  .setting-row strong{font-size:15px}.setting-row small{font-size:13px}.setting-actions button{min-height:40px;padding:8px 11px;font-size:13px}
+  .order-card h3,.wallet-order-card header strong{font-size:17px}.card-customer p,.wallet-order-card header p{font-size:13px}.card-top span,.card-top small,.card-payment span,.card-actions button,.finished-label{font-size:12px}.card-payment strong{font-size:14px}
+  .product-card strong{font-size:14px}.product-card small{font-size:12px}.stepper b{font-size:14px}.stepper button{min-width:44px;min-height:44px;font-size:18px}.order-total-box span{font-size:12px}
+  .inventory-card small{font-size:11px}.inventory-card strong{font-size:17px}.inventory-card em{font-size:12px}.inventory-card>i{font-size:11px}.stock-entry-calculation span,.day-summary-numbers small,.day-stock-row small{font-size:12px}
+  .rito-select-trigger strong,.rito-select-menu strong{font-size:15px}.rito-select-trigger small,.rito-select-menu small{font-size:12px}.rito-select-menu button{min-height:48px}.finance-choice-buttons button,.order-choice-buttons button,.unit-segments button{font-size:13px}
+  .schedule-label strong{font-size:11px}.schedule-realization{font-size:10px}.schedule-upcoming-row strong{font-size:14px}.schedule-upcoming-row small{font-size:12px}
+  .finance-grid text,.finance-point text,.bar-column>span,.bar-column small{font-size:10px}.toast{right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:calc(100% - 24px);font-size:13px;line-height:1.4}
+  .nav-item{min-height:48px;font-size:15px}.user-profile strong{font-size:14px}.user-profile small{font-size:12px}
+}

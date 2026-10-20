@@ -91,3 +91,19 @@ Essa URL funciona em qualquer navegador e aparelho com acesso à internet. Não 
 - modais de configuração fechados ao clicar no fundo externo;
 - pedidos persistidos no Supabase e sincronizados em tempo real entre dispositivos;
 - layout adaptado para desktop, tablet e celular.
+
+## Homologação do CRM comercial
+
+A primeira versão do CRM está isolada na branch `codex/crm-test`. Antes de testar
+cadastros e vínculos, aplique no projeto Supabase de homologação a migration
+`20261020120000_commercial_crm.sql`. Ela cria os prospectos, conecta-os aos
+compromissos da Agenda e atualiza automaticamente a etapa comercial quando um
+evento é confirmado ou encerrado.
+
+Fluxo principal para homologação:
+
+1. criar um prospecto em **Comercial**;
+2. abrir sua ficha e usar **Agendar compromisso**;
+3. confirmar o compromisso na **Agenda**;
+4. iniciar e encerrar o evento normalmente;
+5. conferir receita, repasse, resultado e histórico na ficha comercial.

@@ -29,7 +29,7 @@ jobs:
 
       - name: Preparar os arquivos do site
         env:
-          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY || vars.GOOGLE_MAPS_API_KEY }}
         run: |
           mkdir -p _site
           cp index.html styles.css app.js .nojekyll _site/

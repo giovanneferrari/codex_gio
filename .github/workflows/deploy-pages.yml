@@ -28,9 +28,12 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Preparar os arquivos do site
+        env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
         run: |
           mkdir -p _site
           cp index.html styles.css app.js .nojekyll _site/
+          printf "window.RITO_GOOGLE_MAPS_API_KEY='%s';\n" "$GOOGLE_MAPS_API_KEY" > _site/google-maps-config.js
           cp -R assets _site/assets
           cp -R rev2 _site/rev2
 

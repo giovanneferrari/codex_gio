@@ -107,3 +107,14 @@ Fluxo principal para homologação:
 3. confirmar o compromisso na **Agenda**;
 4. iniciar e encerrar o evento normalmente;
 5. conferir receita, repasse, resultado e histórico na ficha comercial.
+
+### Consulta de endereços pelo Google
+
+Para desenvolvimento local, preencha `window.RITO_GOOGLE_MAPS_API_KEY` em
+`google-maps-config.js` com uma chave de navegador do Google Maps, restrita aos
+domínios usados pela RITO. Em produção, cadastre a mesma chave no segredo
+`GOOGLE_MAPS_API_KEY` do repositório; o workflow gera o arquivo de configuração
+durante o deploy sem gravar o valor no histórico do Git. No Google Cloud,
+habilite **Maps JavaScript API** e **Places API**. Sem a chave, o cadastro
+continua funcionando normalmente e o botão de mapa abre uma pesquisa direta no
+Google Maps.

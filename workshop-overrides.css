@@ -1,0 +1,95 @@
+.privacy-note {
+  display: block;
+  margin-top: -7px;
+  color: #8b8075;
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.edition-back {
+  display: block;
+  width: max-content;
+  margin-bottom: 28px;
+  color: #68754a;
+  font: 700 11px Manrope, sans-serif;
+  letter-spacing: .08em;
+  text-decoration: none;
+}
+
+.availability-alert {
+  margin: -2px 0 18px;
+  padding: 16px 17px;
+  border: 1px solid #d3a75b;
+  border-radius: 13px;
+  background: #fff8e9;
+}
+
+.availability-alert > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.availability-alert strong {
+  color: #76511c;
+  font: 700 13px Manrope, sans-serif;
+}
+
+.availability-alert span,
+.availability-alert small {
+  color: #8b6a38;
+  font-size: 11px;
+}
+
+.availability-track {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #eadcc2;
+}
+
+.availability-track i {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: #b98531;
+  transition: width .5s ease;
+}
+
+.availability-alert small {
+  display: block;
+  margin-top: 8px;
+}
+
+.availability-alert.is-sold-out {
+  border-color: #b96559;
+  background: #fff0ed;
+}
+
+.availability-alert.is-sold-out strong,
+.availability-alert.is-sold-out span,
+.availability-alert.is-sold-out small {
+  color: #963c32;
+}
+
+.workshop-demo-banner {
+  position: fixed;
+  z-index: 20;
+  top: 14px;
+  left: 50%;
+  width: max-content;
+  max-width: calc(100% - 28px);
+  padding: 10px 16px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #342017;
+  color: #fff;
+  box-shadow: 0 8px 28px rgba(52,32,23,.2);
+  font: 700 10px Manrope, sans-serif;
+  letter-spacing: .08em;
+  text-align: center;
+}

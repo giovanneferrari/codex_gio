@@ -1,0 +1,89 @@
+.edition-list {
+  display: grid;
+  gap: 28px;
+}
+
+.edition-finished {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+  background: rgba(36, 31, 25, .72);
+  color: #fff;
+  text-align: center;
+  backdrop-filter: grayscale(1);
+}
+
+.edition-finished strong {
+  font: 700 16px Manrope, sans-serif;
+  letter-spacing: .13em;
+}
+
+.edition-finished small {
+  color: rgba(255,255,255,.78);
+  font-size: 12px;
+}
+
+.edition-card.is-finished {
+  box-shadow: none;
+  opacity: .82;
+}
+
+.edition-card.is-finished:hover {
+  transform: none;
+  box-shadow: none;
+  opacity: .9;
+}
+
+.edition-card.is-finished .edition-finished {
+  display: flex;
+}
+
+.edition-card.is-finished .edition-image img {
+  filter: grayscale(.55) saturate(.45);
+}
+
+.edition-card.is-finished .edition-status {
+  display: none;
+}
+
+.edition-copy > .card-availability {
+  display: block;
+  margin: -20px 0 28px;
+  padding: 13px 14px;
+  border-top: 0;
+  border-radius: 11px;
+  background: #fff6e5;
+}
+
+.card-availability > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.card-availability strong,
+.card-availability span {
+  color: #805b24;
+  font: 700 11px Manrope, sans-serif;
+}
+
+.card-availability-track {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5d4b5;
+}
+
+.card-availability-track i {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: #b98531;
+}

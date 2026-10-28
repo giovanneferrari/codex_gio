@@ -118,3 +118,16 @@ durante o deploy sem gravar o valor no histórico do Git. No Google Cloud,
 habilite **Maps JavaScript API** e **Places API**. Sem a chave, o cadastro
 continua funcionando normalmente e o botão de mapa abre uma pesquisa direta no
 Google Maps.
+
+## Inscrições de workshops
+
+A página pública de edições está disponível em `/workshop/`. Cada edição possui
+uma rota própria; a primeira está em `/workshop/edicaosp-1/`. Ela confirma a inscrição
+com nome, WhatsApp e eventual restrição alimentar, informa que o pagamento será
+feito no dia e mostra uma tela de sucesso após o envio.
+
+Para ativar o fluxo em um ambiente Supabase, aplique a migration
+`supabase/migrations/20261027180000_workshops.sql` e publique novamente o site.
+As confirmações aparecem em **Workshops** no ambiente administrativo, onde cada
+linha pode ser pesquisada, editada ou excluída. O modo local de demonstração
+inclui duas inscrições fictícias para validar a interface sem salvar dados.

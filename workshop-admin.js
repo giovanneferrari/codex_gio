@@ -1,5 +1,5 @@
 /* Gestão administrativa das edições de workshop. */
-let selectedWorkshopAdminId=null,editingWorkshopEventId=null,workshopCoverObjectUrl='';
+let selectedWorkshopAdminId=null,editingWorkshopEventId=null,workshopCoverObjectUrl='',WORKSHOP_CHECKLIST=[],loadedWorkshopChecklistId=null,editingChecklistItemId=null,checklistAction='edit';
 const workshopView=$('#workshops');
 
 if(workshopView){
@@ -10,7 +10,9 @@ if(workshopView){
   actions.innerHTML='<button type="button" class="primary" id="newWorkshopEventBtn">＋ Novo evento</button>';
   actions.appendChild(publicLink);heading.appendChild(actions);
   workshopView.querySelector('.workshop-metrics').insertAdjacentHTML('beforebegin','<div class="workshop-editions" id="workshopEditionCards"></div>');
+  workshopView.querySelector('.workshop-metrics').insertAdjacentHTML('afterend',`<article class="panel workshop-checklist-panel"><div class="workshop-checklist-head"><div><small>PREPARAÇÃO DO EVENTO</small><h2>Checklist operacional</h2><p id="workshopChecklistHelp">Tudo o que precisa estar pronto para esta edição.</p></div><strong id="workshopChecklistProgress">0/0</strong></div><form id="workshopChecklistForm"><input name="title" maxlength="140" required placeholder="Adicionar item ao checklist"><select name="category" aria-label="Categoria"><option>Espaço</option><option>Estrutura</option><option>Insumos</option><option>Brindes</option><option>Comunicação</option><option>Equipe</option><option>Outros</option></select><button type="submit" class="primary">Adicionar</button></form><div class="workshop-checklist-list" id="workshopChecklistList"></div></article>`);
   document.body.insertAdjacentHTML('beforeend',`<dialog id="workshopEventDialog" class="config-dialog workshop-event-dialog"><form id="workshopEventForm"><div class="dialog-head"><div><span>WORKSHOPS</span><h2 id="workshopEventDialogTitle">Novo evento</h2><p>Configure a edição que aparecerá na página pública.</p></div><button type="button" data-close-workshop-event aria-label="Fechar">×</button></div><label class="workshop-cover-upload"><img id="workshopCoverPreview" src="assets/workshop-sp.png" alt="Prévia da capa"><span><strong>Arte da capa</strong><small>JPG, PNG ou WebP · formato vertical recomendado · até 8 MB</small></span><input name="cover" type="file" accept="image/jpeg,image/png,image/webp"></label><div class="form-row"><label>Título<input name="title" required maxlength="90" placeholder="Ex.: Workshop de Café"></label><label>Identificação da edição<input name="editionLabel" maxlength="70" placeholder="Ex.: SÃO PAULO · EDIÇÃO 02"></label></div><label>Texto de apresentação<textarea name="description" maxlength="260" rows="3" placeholder="Uma descrição curta da experiência"></textarea></label><div class="form-row"><label>Data<input name="eventDate" type="date" required></label><label>Horário<input name="startsAt" type="time" required></label></div><div class="form-row"><label>Capacidade de participantes<input name="capacity" type="number" min="1" max="1000" step="1" required></label><label>Valor por pessoa (R$)<input name="price" type="number" min="0" step="0.01" required></label></div><p class="workshop-capacity-note" id="workshopCapacityIncreaseNote" hidden></p><div class="form-row"><label>Nome do local<input name="locationName" maxlength="100" placeholder="Ex.: Casa do Bosque"></label><label>Identificador do link<input name="slug" required maxlength="90" pattern="[a-z0-9-]+" placeholder="workshop-sp-02"></label></div><label>Endereço<input name="address" maxlength="180" placeholder="Rua, número, bairro e cidade"></label><label class="workshop-active-check"><input name="active" type="checkbox" checked> Publicar esta edição e aceitar inscrições</label><p class="form-error" id="workshopEventError"></p><div class="dialog-actions"><button type="button" class="secondary" data-close-workshop-event>Cancelar</button><button type="submit" class="primary">Salvar evento</button></div></form></dialog>`);
+  document.body.insertAdjacentHTML('beforeend',`<dialog id="workshopChecklistDialog" class="config-dialog workshop-checklist-dialog"><form id="workshopChecklistEditForm"><div class="dialog-head"><div><span>CHECKLIST</span><h2 id="workshopChecklistDialogTitle">Editar item</h2><p id="workshopChecklistDialogHelp">Atualize as informações desta preparação.</p></div><button type="button" data-close-workshop-checklist aria-label="Fechar">×</button></div><label>Item<input name="title" required maxlength="140"></label><label>Categoria<select name="category"><option>Espaço</option><option>Estrutura</option><option>Insumos</option><option>Brindes</option><option>Comunicação</option><option>Equipe</option><option>Outros</option></select></label><label id="workshopChecklistTargetLabel" hidden>Duplicar para<select name="targetWorkshop"></select></label><p class="form-error" id="workshopChecklistEditError"></p><div class="dialog-actions"><button type="button" class="secondary" data-close-workshop-checklist>Cancelar</button><button type="submit" class="primary" id="workshopChecklistDialogSubmit">Salvar alterações</button></div></form></dialog>`);
 }
 
 function workshopAdminCurrent(){return WORKSHOPS.find(item=>item.id===selectedWorkshopAdminId)||WORKSHOPS[0]}
@@ -24,12 +26,54 @@ function renderWorkshopEditionCards(){
   const sorted=[...WORKSHOPS].sort((a,b)=>new Date(b.event_date)-new Date(a.event_date));
   if(!selectedWorkshopAdminId&&sorted.length)selectedWorkshopAdminId=(sorted.find(item=>new Date(`${item.event_date}T23:59:59`)>=new Date())||sorted[0]).id;
   container.innerHTML=sorted.length?sorted.map(item=>{const count=workshopAdminCount(item),remaining=item.capacity==null?'—':Math.max(Number(item.capacity)-count,0),batch=item.capacity_increased_at?`<b class="new-batch">NOVO LOTE · ${item.previous_capacity} → ${item.capacity}</b>`:`<b>${item.active?'PUBLICADO':'RASCUNHO'}</b>`;return`<button type="button" class="workshop-edition-card ${item.id===selectedWorkshopAdminId?'active':''}" data-select-workshop="${item.id}"><img src="${esc(workshopAdminCover(item))}" alt=""><span><small>${esc(item.edition_label||'EDIÇÃO')}</small><strong>${esc(item.title)}</strong><em>${workshopDate(item.event_date)} · ${count} inscritos · ${remaining} vagas</em>${batch}<span class="workshop-edition-edit" data-edit-workshop-event="${item.id}">Editar edição</span></span></button>`}).join(''):'<div class="empty-state compact"><strong>Nenhuma edição criada</strong><small>Use “Novo evento” para publicar a primeira.</small></div>';
-  container.querySelectorAll('[data-select-workshop]').forEach(button=>button.onclick=event=>{if(event.target.closest('[data-edit-workshop-event]'))return;selectedWorkshopAdminId=button.dataset.selectWorkshop;renderWorkshops()});
+  container.querySelectorAll('[data-select-workshop]').forEach(button=>button.onclick=event=>{if(event.target.closest('[data-edit-workshop-event]'))return;selectedWorkshopAdminId=button.dataset.selectWorkshop;loadedWorkshopChecklistId=null;renderWorkshops()});
   container.querySelectorAll('[data-edit-workshop-event]').forEach(button=>button.onclick=event=>{event.stopPropagation();openWorkshopEvent(button.dataset.editWorkshopEvent)});
 }
 
+function checklistDate(value){return value?new Date(value).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}).replace('.',''):''}
+function renderWorkshopChecklist(){
+  const list=$('#workshopChecklistList'),progress=$('#workshopChecklistProgress'),help=$('#workshopChecklistHelp');if(!list)return;
+  const items=WORKSHOP_CHECKLIST.filter(item=>item.workshop_id===selectedWorkshopAdminId).sort((a,b)=>Number(a.completed)-Number(b.completed)||Number(a.sort_order)-Number(b.sort_order)||new Date(a.created_at)-new Date(b.created_at)),done=items.filter(item=>item.completed).length;
+  progress.textContent=`${done}/${items.length}`;help.textContent=items.length?`${done} concluído${done===1?'':'s'} · os itens finalizados permanecem no histórico.`:'Tudo o que precisa estar pronto para esta edição.';
+  list.innerHTML=items.length?items.map(item=>`<div class="workshop-checklist-item ${item.completed?'completed':''}"><button type="button" class="workshop-check" data-toggle-checklist="${item.id}" aria-label="${item.completed?'Reabrir':'Concluir'} item">${item.completed?'✓':''}</button><span><b>${esc(item.category)}</b><strong>${esc(item.title)}</strong>${item.completed_at?`<small>Concluído em ${checklistDate(item.completed_at)}</small>`:''}</span><span class="workshop-checklist-actions"><button type="button" data-edit-checklist="${item.id}" aria-label="Editar item">Editar</button><button type="button" data-duplicate-checklist="${item.id}" aria-label="Duplicar para outro evento">Duplicar</button><button type="button" class="workshop-checklist-delete" data-delete-checklist="${item.id}" aria-label="Excluir item">×</button></span></div>`).join(''):'<div class="empty-state compact"><strong>Checklist vazio</strong><small>Adicione aluguel do espaço, insumos, brindes ou qualquer preparação necessária.</small></div>';
+  list.querySelectorAll('[data-toggle-checklist]').forEach(button=>button.onclick=()=>toggleWorkshopChecklist(button.dataset.toggleChecklist));
+  list.querySelectorAll('[data-edit-checklist]').forEach(button=>button.onclick=()=>openWorkshopChecklistDialog(button.dataset.editChecklist,'edit'));
+  list.querySelectorAll('[data-duplicate-checklist]').forEach(button=>button.onclick=()=>openWorkshopChecklistDialog(button.dataset.duplicateChecklist,'duplicate'));
+  list.querySelectorAll('[data-delete-checklist]').forEach(button=>button.onclick=()=>deleteWorkshopChecklist(button.dataset.deleteChecklist));
+}
+
+function openWorkshopChecklistDialog(id,action){
+  const item=WORKSHOP_CHECKLIST.find(entry=>entry.id===id),form=$('#workshopChecklistEditForm');if(!item)return;editingChecklistItemId=id;checklistAction=action;form.reset();form.elements.title.value=item.title;form.elements.category.value=item.category;
+  const duplicate=action==='duplicate',targetLabel=$('#workshopChecklistTargetLabel'),target=form.elements.targetWorkshop;targetLabel.hidden=!duplicate;target.required=duplicate;
+  if(duplicate){target.innerHTML=WORKSHOPS.filter(workshop=>workshop.id!==item.workshop_id).map(workshop=>`<option value="${workshop.id}">${esc(workshop.edition_label||workshop.title)} · ${workshopDate(workshop.event_date)}</option>`).join('');if(!target.options.length)return toast('Crie outra edição antes de duplicar este item.')}
+  $('#workshopChecklistDialogTitle').textContent=duplicate?'Duplicar item':'Editar item';$('#workshopChecklistDialogHelp').textContent=duplicate?'Escolha a edição que receberá uma cópia pendente deste item.':'Atualize as informações desta preparação.';$('#workshopChecklistDialogSubmit').textContent=duplicate?'Duplicar item':'Salvar alterações';$('#workshopChecklistEditError').textContent='';$('#workshopChecklistDialog').showModal();
+}
+
+function closeWorkshopChecklistDialog(){$('#workshopChecklistDialog').close()}
+
+async function loadWorkshopChecklist(){
+  if(!selectedWorkshopAdminId||loadedWorkshopChecklistId===selectedWorkshopAdminId)return;
+  loadedWorkshopChecklistId=selectedWorkshopAdminId;
+  if(demoMode){if(!WORKSHOP_CHECKLIST.length)WORKSHOP_CHECKLIST=[{id:'demo-check-1',workshop_id:selectedWorkshopAdminId,title:'Confirmar aluguel e acesso ao espaço',category:'Espaço',completed:true,completed_at:new Date().toISOString(),sort_order:0,created_at:new Date().toISOString()},{id:'demo-check-2',workshop_id:selectedWorkshopAdminId,title:'Separar café, filtros e demais insumos',category:'Insumos',completed:false,completed_at:null,sort_order:1,created_at:new Date().toISOString()}];return renderWorkshopChecklist()}
+  const {data,error}=await db.from('workshop_checklist_items').select('*').eq('workshop_id',selectedWorkshopAdminId).order('completed').order('sort_order').order('created_at');
+  if(error){loadedWorkshopChecklistId=null;return}
+  WORKSHOP_CHECKLIST=WORKSHOP_CHECKLIST.filter(item=>item.workshop_id!==selectedWorkshopAdminId).concat(data||[]);renderWorkshopChecklist();
+}
+
+async function toggleWorkshopChecklist(id){
+  const item=WORKSHOP_CHECKLIST.find(entry=>entry.id===id);if(!item)return;const completed=!item.completed;
+  if(demoMode){item.completed=completed;item.completed_at=completed?new Date().toISOString():null;return renderWorkshopChecklist()}
+  const {data,error}=await db.from('workshop_checklist_items').update({completed}).eq('id',id).select('*').single();if(error)return toast('Não foi possível atualizar o item.');Object.assign(item,data);renderWorkshopChecklist();
+}
+
+async function deleteWorkshopChecklist(id){
+  if(!confirm('Excluir este item do checklist?'))return;
+  if(demoMode){WORKSHOP_CHECKLIST=WORKSHOP_CHECKLIST.filter(item=>item.id!==id);return renderWorkshopChecklist()}
+  const {error}=await db.from('workshop_checklist_items').delete().eq('id',id);if(error)return toast('Não foi possível excluir o item.');WORKSHOP_CHECKLIST=WORKSHOP_CHECKLIST.filter(item=>item.id!==id);renderWorkshopChecklist();
+}
+
 const renderWorkshopsAdminBase=renderWorkshops;
-renderWorkshops=function(){renderWorkshopEditionCards();renderWorkshopsAdminBase();renderWorkshopEditionCards()};
+renderWorkshops=function(){renderWorkshopEditionCards();renderWorkshopsAdminBase();renderWorkshopEditionCards();renderWorkshopChecklist();loadWorkshopChecklist()};
 
 function workshopSlugify(value){return value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,90)}
 function closeWorkshopEvent(){if(workshopCoverObjectUrl){URL.revokeObjectURL(workshopCoverObjectUrl);workshopCoverObjectUrl=''}$('#workshopEventDialog').close()}
@@ -43,10 +87,28 @@ function openWorkshopEvent(id=null){
 
 $('#newWorkshopEventBtn').onclick=()=>openWorkshopEvent();
 document.querySelectorAll('[data-close-workshop-event]').forEach(button=>button.onclick=closeWorkshopEvent);
+document.querySelectorAll('[data-close-workshop-checklist]').forEach(button=>button.onclick=closeWorkshopChecklistDialog);
 $('#workshopEventForm').elements.title.addEventListener('input',event=>{if(!editingWorkshopEventId)$('#workshopEventForm').elements.slug.value=workshopSlugify(event.target.value)});
 $('#workshopEventForm').elements.slug.addEventListener('input',event=>event.target.value=workshopSlugify(event.target.value));
 $('#workshopEventForm').elements.capacity.addEventListener('input',event=>{const item=WORKSHOPS.find(workshop=>workshop.id===editingWorkshopEventId),note=$('#workshopCapacityIncreaseNote'),next=Number(event.target.value);note.hidden=!(item?.capacity&&next>Number(item.capacity));if(!note.hidden)note.textContent=`Novo lote: ao salvar, a capacidade passará de ${item.capacity} para ${next} pessoas. A ampliação será destacada na página pública.`});
 $('#workshopEventForm').elements.cover.addEventListener('change',event=>{const file=event.target.files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>8*1024*1024){event.target.value='';return $('#workshopEventError').textContent='Escolha uma imagem JPG, PNG ou WebP de até 8 MB.'}if(workshopCoverObjectUrl)URL.revokeObjectURL(workshopCoverObjectUrl);workshopCoverObjectUrl=URL.createObjectURL(file);$('#workshopCoverPreview').src=workshopCoverObjectUrl;$('#workshopEventError').textContent=''});
+
+$('#workshopChecklistForm').onsubmit=async event=>{
+  event.preventDefault();const form=event.currentTarget,title=form.elements.title.value.trim(),category=form.elements.category.value;if(!title||!selectedWorkshopAdminId)return;
+  if(demoMode){WORKSHOP_CHECKLIST.push({id:`demo-check-${Date.now()}`,workshop_id:selectedWorkshopAdminId,title,category,completed:false,completed_at:null,sort_order:WORKSHOP_CHECKLIST.length,created_at:new Date().toISOString()});form.reset();renderWorkshopChecklist();return}
+  busy(form,true);const {data,error}=await db.from('workshop_checklist_items').insert({workshop_id:selectedWorkshopAdminId,title,category,sort_order:WORKSHOP_CHECKLIST.filter(item=>item.workshop_id===selectedWorkshopAdminId).length}).select('*').single();busy(form,false);if(error)return toast('Não foi possível adicionar o item.');WORKSHOP_CHECKLIST.push(data);form.reset();renderWorkshopChecklist();
+};
+
+$('#workshopChecklistEditForm').onsubmit=async event=>{
+  event.preventDefault();const form=event.currentTarget,item=WORKSHOP_CHECKLIST.find(entry=>entry.id===editingChecklistItemId);if(!item)return;const title=form.elements.title.value.trim(),category=form.elements.category.value;
+  if(checklistAction==='duplicate'){
+    const workshopId=form.elements.targetWorkshop.value,payload={workshop_id:workshopId,title,category,completed:false,completed_at:null,sort_order:WORKSHOP_CHECKLIST.filter(entry=>entry.workshop_id===workshopId).length};
+    if(demoMode){WORKSHOP_CHECKLIST.push({id:`demo-check-${Date.now()}`,created_at:new Date().toISOString(),...payload});closeWorkshopChecklistDialog();return toast('Item duplicado como pendente.')}
+    busy(form,true);const {data,error}=await db.from('workshop_checklist_items').insert(payload).select('*').single();busy(form,false);if(error)return $('#workshopChecklistEditError').textContent='Não foi possível duplicar o item.';WORKSHOP_CHECKLIST.push(data);closeWorkshopChecklistDialog();toast('Item duplicado para a outra edição.');return
+  }
+  if(demoMode){item.title=title;item.category=category;closeWorkshopChecklistDialog();return renderWorkshopChecklist()}
+  busy(form,true);const {data,error}=await db.from('workshop_checklist_items').update({title,category}).eq('id',item.id).select('*').single();busy(form,false);if(error)return $('#workshopChecklistEditError').textContent='Não foi possível salvar as alterações.';Object.assign(item,data);closeWorkshopChecklistDialog();renderWorkshopChecklist();toast('Item atualizado.');
+};
 
 $('#workshopEventForm').onsubmit=async event=>{
   event.preventDefault();const form=event.currentTarget,data=new FormData(form),slug=workshopSlugify(data.get('slug')),payload={slug,title:String(data.get('title')).trim(),edition_label:String(data.get('editionLabel')).trim()||null,description:String(data.get('description')).trim()||null,event_date:data.get('eventDate'),starts_at:data.get('startsAt'),capacity:Number(data.get('capacity')),price:Number(data.get('price')),location_name:String(data.get('locationName')).trim()||null,address:String(data.get('address')).trim()||null,active:data.get('active')==='on'},cover=data.get('cover');

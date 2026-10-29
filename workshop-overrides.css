@@ -93,3 +93,43 @@
   letter-spacing: .08em;
   text-align: center;
 }
+
+.new-batch-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 15px;
+  padding: 13px 15px;
+  border-radius: 12px;
+  background: #fff2d7;
+  color: #805820;
+}
+
+.new-batch-alert strong {
+  flex: 0 0 auto;
+  font: 700 10px Manrope, sans-serif;
+  letter-spacing: .1em;
+}
+
+.new-batch-alert span {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.workshop-not-found {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 30px;
+  background: #f5f2e7;
+  color: #342017;
+  text-align: center;
+  font-family: "DM Sans", sans-serif;
+}
+
+.workshop-not-found img { width: 110px; margin-bottom: 30px; }
+.workshop-not-found h1 { margin: 0 0 10px; font: 600 34px Manrope, sans-serif; }
+.workshop-not-found p { margin: 0; color: #74685e; }
+.workshop-not-found a { color: #68754a; font-weight: 700; }

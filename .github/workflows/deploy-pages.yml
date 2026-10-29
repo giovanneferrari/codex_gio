@@ -32,7 +32,7 @@ jobs:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY || vars.GOOGLE_MAPS_API_KEY }}
         run: |
           mkdir -p _site
-          cp index.html styles.css app.js workshop.html workshop.css workshop-overrides.css workshop.js .nojekyll _site/
+          cp index.html styles.css app.js workshop-admin.css workshop-admin.js workshop.html workshop.css workshop-overrides.css workshop.js .nojekyll _site/
           printf "window.RITO_GOOGLE_MAPS_API_KEY='%s';\n" "$GOOGLE_MAPS_API_KEY" > _site/google-maps-config.js
           cp -R assets _site/assets
           cp -R rev2 _site/rev2

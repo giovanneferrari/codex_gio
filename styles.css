@@ -333,6 +333,7 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
   .product-card strong{font-size:14px}.product-card small{font-size:12px}.stepper b{font-size:14px}.stepper button{min-width:44px;min-height:44px;font-size:18px}.order-total-box span{font-size:12px}
   .inventory-card small{font-size:11px}.inventory-card strong{font-size:17px}.inventory-card em{font-size:12px}.inventory-card>i{font-size:11px}.stock-entry-calculation span,.day-summary-numbers small,.day-stock-row small{font-size:12px}
   .rito-select-trigger strong,.rito-select-menu strong{font-size:15px}.rito-select-trigger small,.rito-select-menu small{font-size:12px}.rito-select-menu button{min-height:48px}.finance-choice-buttons button,.order-choice-buttons button,.unit-segments button{font-size:13px}
+  .order-choice-row{grid-template-columns:1fr;gap:18px}.order-choice-row>label{width:100%}.order-choice-buttons{gap:8px}.order-choice-buttons button{min-height:54px;padding:9px 7px;line-height:1.2}.payment-choices button{white-space:nowrap}.status-choices button{gap:6px}
   .schedule-label strong{font-size:11px}.schedule-realization{font-size:10px}.schedule-upcoming-row strong{font-size:14px}.schedule-upcoming-row small{font-size:12px}
   .finance-grid text,.finance-point text,.bar-column>span,.bar-column small{font-size:10px}.toast{right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:calc(100% - 24px);font-size:13px;line-height:1.4}
   .nav-item{min-height:48px;font-size:15px}.user-profile strong{font-size:14px}.user-profile small{font-size:12px}

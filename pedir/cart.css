@@ -1,0 +1,57 @@
+#cartBar {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+}
+
+#cartBar[hidden] { display: none; }
+
+.cart-overview {
+  display: grid;
+  width: 100%;
+  min-height: 76px;
+  padding: 13px 18px;
+  grid-template-columns: 1fr auto 18px;
+  gap: 16px;
+  align-items: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cart-overview > span:last-of-type { text-align: right; }
+.cart-overview small, .cart-overview strong { display: block; }
+.cart-overview small { margin-bottom: 4px; color: #cabcaf; font-size: 8px; letter-spacing: .1em; }
+.cart-overview strong { font-size: 14px; }
+.cart-overview > b { font-size: 27px; font-weight: 400; }
+
+.cart-panel {
+  position: relative;
+  display: grid;
+  gap: 15px;
+  padding: 28px;
+}
+
+.cart-panel > span { color: var(--coffee); font-size: 9px; font-weight: 700; letter-spacing: .12em; }
+.cart-panel h2 { margin: -6px 0 2px; font: 600 25px Manrope; }
+.cart-lines { display: grid; max-height: min(52dvh, 470px); overflow: auto; }
+.cart-line { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 17px 0; border-bottom: 1px solid var(--line); }
+.cart-line > div:first-child { min-width: 0; }
+.cart-line small, .cart-line strong, .cart-line b { display: block; }
+.cart-line small { color: var(--coffee); font-size: 9px; font-weight: 700; letter-spacing: .07em; }
+.cart-line strong { margin: 5px 0; font: 600 15px Manrope; }
+.cart-line b { font-size: 13px; }
+.cart-line-actions { display: grid; justify-items: end; gap: 5px; }
+.remove-line { padding: 3px; border: 0; background: transparent; color: #9a493b; font-size: 11px; text-decoration: underline; }
+.cart-dialog-total { display: flex; align-items: center; justify-content: space-between; padding-top: 4px; }
+.cart-dialog-total strong { font: 600 22px Manrope; }
+.cart-panel > .submit { width: 100%; }
+
+@media (max-width: 560px) {
+  .cart-panel { padding: 25px 20px; }
+  .cart-line { gap: 10px; }
+  .cart-overview { padding-inline: 16px; }
+}

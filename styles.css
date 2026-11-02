@@ -352,3 +352,24 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
 @media(max-width:760px){.workshop-metrics{grid-template-columns:1fr}.workshop-list-panel>.panel-title{align-items:stretch}.workshop-search{width:100%}.workshop-table{min-width:720px}.workshop-registration-dialog .dialog-actions{display:grid;grid-template-columns:1fr 1fr}.workshop-registration-dialog .dialog-actions>span{display:none}.workshop-registration-dialog .dialog-actions button{width:100%}}
 .public-order-config-dialog{width:min(620px,calc(100% - 28px))}.public-order-config-dialog form{display:grid;gap:14px}.public-order-config-dialog textarea{width:100%;margin-top:7px;padding:13px;border:1px solid var(--line);border-radius:10px;font:inherit;resize:vertical}.public-order-toggle{display:flex!important;align-items:center;gap:11px;padding:13px;border:1px solid var(--line);border-radius:11px;background:#faf8f5}.public-order-toggle input{width:20px!important;height:20px;margin:0!important;accent-color:#65704d}.public-order-toggle strong,.public-order-toggle small{display:block}.public-order-toggle small{margin-top:3px;color:var(--muted);font-size:9px}.public-order-link{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:13px;border:1px solid var(--line);border-radius:11px;background:#f6f2ec}.public-order-link small,.public-order-link strong{display:block}.public-order-link small{color:var(--muted);font-size:7px;letter-spacing:.09em}.public-order-link strong{margin-top:4px;font-size:11px}.public-order-qr{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:16px;border:1px dashed var(--line);border-radius:12px}.public-order-qr canvas{width:180px;height:180px}.public-order-config-button{white-space:nowrap}@media(max-width:760px){.public-order-config-button{width:100%}.public-order-link{align-items:stretch;flex-direction:column}.public-order-link button{width:100%}}
 .qr-order-stamp{display:inline-flex!important;width:max-content;margin:4px 0 0;padding:3px 6px;border-radius:999px;background:#e4ecde;color:#526748;font-size:7px!important;font-style:normal;font-weight:700;letter-spacing:.06em}.card-top .qr-order-stamp{display:inline-flex!important;margin:0 0 0 5px;vertical-align:middle}.card-customer em{color:#8b6a4d;font-size:9px;font-style:normal}
+
+/* Preserve compact desktop labels; separate each product on phones. */
+.order-product-line + .order-product-line::before { content: ' · '; }
+.wallet-mobile-payment { display: none; }
+@media (max-width: 760px) {
+  .order-product-line { display: block; overflow-wrap: anywhere; }
+  .order-product-line + .order-product-line { margin-top: 5px; }
+  .order-product-line + .order-product-line::before { content: none; }
+  .card-customer, .wallet-order-card > header > div { min-width: 0; }
+  .card-customer h3 { overflow-wrap: anywhere; }
+  .card-customer p, .wallet-order-card header p {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.5;
+  }
+  .wallet-order-card header small { font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
+  .wallet-mobile-payment { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.25); font-size: 13px; }
+  .wallet-mobile-payment span { overflow-wrap: anywhere; min-width: 0; }
+  .wallet-order-card.expanded .wallet-mobile-payment { display: none; }
+}

@@ -108,7 +108,8 @@ O módulo de pedidos oferece:
 - polling de segurança quando a aba está visível;
 - identificação de pedidos originados pelo QR Code;
 - observação do cliente no card;
-- interface móvel com pagamento e status em linhas separadas.
+- interface móvel com pagamento e status em linhas separadas;
+- produtos em linhas individuais no celular (Kanban, Cards e histórico); em Cards, cliente, produtos, pagamento e total ficam visíveis sem expandir.
 
 Os pedidos vinculados a um evento ativo recebem automaticamente `operation_mode = event` e o `event_id` correspondente.
 

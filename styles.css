@@ -373,3 +373,15 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
   .wallet-mobile-payment span { overflow-wrap: anywhere; min-width: 0; }
   .wallet-order-card.expanded .wallet-mobile-payment { display: none; }
 }
+
+@media (max-width: 760px) {
+  .kanban .card-actions { gap: 8px; flex-wrap: wrap; }
+  .kanban .card-actions button {
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+}

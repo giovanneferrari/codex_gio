@@ -102,6 +102,7 @@ Todas as migrations listadas acima estavam aplicadas em produção na última at
 O módulo de pedidos oferece:
 
 - Kanban e visualização em cards;
+- no formulário de pedido em celular, Excluir, Cancelar e Salvar/Criar ficam empilhados, em largura total e com altura mínima de 50 px;
 - botões de retorno do Kanban identificam o destino (“← A preparar” ou “← Em preparo”); no celular, ações têm altura mínima de 44 px e ficam lado a lado em duas colunas iguais, com retorno à esquerda e avanço à direita;
 - etapas `A fazer`, `Em preparo` e `Finalizado`;
 - filtros por período, status, pagamento e produto;

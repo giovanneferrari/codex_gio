@@ -325,7 +325,7 @@ Ao alterar essa parte, evitar múltiplos canais e intervalos concorrentes.
 - Campos e filtros devem seguir o mesmo sistema visual.
 - Evitar cards transbordando com textos longos.
 - Big numbers devem ser horizontais quando possível para reduzir rolagem.
-- Ações destrutivas precisam de confirmação.
+- Ações destrutivas precisam de confirmação. A exclusão de pedidos no editor e histórico usa o diálogo da identidade RITO, com número, cliente e aviso de exclusão definitiva; botões de confirmação em largura total no celular.
 - Estados selecionados precisam de retorno visual evidente.
 - Não reconstruir módulos inteiros para pequenos ajustes.
 - Preservar interfaces já aprovadas quando a solicitação for localizada.

@@ -408,3 +408,8 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
   }
   #orderDialog .order-dialog-actions > button[hidden] { display: none; }
 }
+
+@media (max-width: 760px) {
+  #actionConfirmDialog .dialog-actions { display: flex; flex-direction: column; gap: 10px; }
+  #actionConfirmDialog .dialog-actions button { width: 100%; min-height: 50px; padding: 14px 16px; font-size: 15px; }
+}

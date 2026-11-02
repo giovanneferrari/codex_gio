@@ -200,7 +200,7 @@ No encerramento:
 - o contrato é incluído conforme o modelo de cobrança;
 - as despesas são preenchidas em linhas com descrição e valor;
 - produtos servidos conciliam estoque;
-- são registrados faturamento, despesas e lucro;
+- são registrados faturamento e despesas do fechamento; o lucro exibido também desconta o custo dos insumos pelas movimentações de consumo, perdas vinculadas e ajustes de encerramento;
 - os lançamentos também alimentam o Financeiro;
 - despesas usam `financial_entries.related_event_id` para permitir várias linhas sem quebrar a receita única em `event_id`.
 
@@ -224,6 +224,12 @@ Tabelas/campos relevantes:
 RPC de encerramento atual: `close_schedule_operation_v3(...)`.
 
 Existe fallback para `close_schedule_operation_v2(...)`, mas a v3 deve ser considerada a implementação vigente.
+
+O bloco “Operação agora” e o badge de pedidos incluem os pedidos de eventos e os avulsos do dia em todos os status.
+
+A contagem de pedidos finalizados inclui pedidos de eventos, inclusive em andamento, pela data do pedido. O ticket médio usa os valores dos pedidos, sem incluir contratos de eventos. Os pedidos de eventos não somam receita novamente: ela continua reconhecida no fechamento.
+
+Os indicadores Custo e Lucro do painel usam consumo histórico e despesas do fechamento, sem percentuais fixos. Eventos entram na data do encerramento, inclusive sem receita. Compras de estoque continuam no Financeiro, mas não são descontadas novamente nesses indicadores. Sem receitas de produto/custos registrados, o consumo correspondente não pode ser apurado.
 
 ## 12. Financeiro e estoque
 

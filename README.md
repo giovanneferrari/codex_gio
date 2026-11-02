@@ -61,7 +61,7 @@ Essa URL funciona em qualquer navegador e aparelho com acesso à internet. Não 
 - login inicial para acesso ao sistema;
 - dashboard com faturamento, pedidos, ticket médio, custo e filtros por período;
 - indicadores financeiros calculados exclusivamente com pedidos finalizados;
-- receita líquida calculada como 60% do faturamento finalizado;
+- lucro calculado pelo faturamento menos o custo histórico dos insumos consumidos e as despesas do fechamento dos eventos;
 - big numbers interativos que alternam a métrica do gráfico;
 - gráfico com agrupamento diário ou mensal;
 - gráficos de faturamento e formas de pagamento;

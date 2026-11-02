@@ -140,7 +140,7 @@ Regras importantes:
 - Formas de pagamento vêm de `payment_methods`.
 - Pix só aparece se existir uma forma de pagamento com “Pix” no nome e o campo de Pix estiver preenchido em **Pedidos → QR / Autoatendimento**.
 - O campo Pix aceita link ou código Copia e Cola.
-- Se for link, a tela abre o pagamento; se for código, oferece botão para copiar.
+- Após um pedido Pix válido, a confirmação exibe o conteúdo cadastrado (link ou código) como texto selecionável, com o botão “Copiar Pix” abaixo. O texto visível corresponde ao conteúdo copiado.
 - A seleção de pagamento usa botões visuais e precisa manter `type="button"` para não enviar o formulário prematuramente.
 - Depois de alterar estilos ou comportamento, renovar as versões de `cart.css` e `order.js` em `pedir/index.html`.
 
@@ -341,6 +341,7 @@ Ao alterar essa parte, evitar múltiplos canais e intervalos concorrentes.
 - Seleção visual de pagamento corrigida e publicada com:
   - `cart.css?v=2`;
   - `order.js?v=4`.
+- Ajuste local posterior: confirmação Pix exibe texto e botão de copiar abaixo; versões `cart.css?v=3` e `order.js?v=5`. Publicação ainda pendente.
 - Último commit conhecido na criação deste documento: `a65ab24f`.
 
 ## 20. Como iniciar uma nova conversa

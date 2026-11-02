@@ -92,6 +92,7 @@ Todas as migrations listadas acima estavam aplicadas em produção na última at
 
 - A aplicação usa Supabase Auth.
 - Há perfis administrativos e operacionais.
+- Ao atualizar a página, o ambiente e a aba aberta são recuperados por usuário nesta sessão do navegador, respeitando o perfil operacional. Sair da conta limpa essa navegação.
 - Operações sensíveis devem permanecer protegidas por RLS, `auth.uid()` e/ou verificação administrativa.
 - A página pública `/pedir/` usa somente RPCs `security definer` com validação no servidor.
 - Nunca confiar em preços ou totais enviados pelo navegador.
@@ -234,7 +235,7 @@ O sistema possui:
 - datas de competência, vencimento e liquidação;
 - lançamentos recorrentes;
 - estoque e movimentações;
-- histórico de estoque com filtros Hoje, 7 dias, Este mês (padrão), Tudo e Personalizado, com contagem de movimentações; o filtro não altera os saldos dos insumos;
+- histórico de estoque com filtros Hoje (padrão), 7 dias, Este mês, Tudo e Personalizado, com contagem de movimentações; o filtro não altera os saldos dos insumos;
 - receitas de produtos e consumo automático;
 - ajustes e perdas;
 - conciliação de diferenças no encerramento de eventos.

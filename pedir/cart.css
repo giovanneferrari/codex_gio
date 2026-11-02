@@ -49,9 +49,15 @@
 .cart-dialog-total { display: flex; align-items: center; justify-content: space-between; padding-top: 4px; }
 .cart-dialog-total strong { font: 600 22px Manrope; }
 .cart-panel > .submit { width: 100%; }
+.public-payment-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.public-payment-choices button { display: flex; min-height: 52px; align-items: center; gap: 9px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 11px; background: #fbfaf8; color: var(--ink); text-align: left; font-size: 12px; font-weight: 700; }
+.public-payment-choices button i { display: grid; width: 30px; height: 30px; flex: 0 0 30px; place-items: center; border-radius: 9px; background: #eee7dc; color: var(--coffee); font-style: normal; }
+.public-payment-choices button.active { border-color: var(--coffee); background: #fff9f1; box-shadow: inset 0 0 0 1px var(--coffee); }
+.public-payment-choices button.active i { background: var(--ink); color: #fff; }
 
 @media (max-width: 560px) {
   .cart-panel { padding: 25px 20px; }
   .cart-line { gap: 10px; }
   .cart-overview { padding-inline: 16px; }
+  .public-payment-choices { grid-template-columns: 1fr; }
 }

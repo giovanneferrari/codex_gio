@@ -375,12 +375,15 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
 }
 
 @media (max-width: 760px) {
-  .kanban .card-actions { gap: 8px; flex-wrap: wrap; }
+  .kanban .card-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; align-items: center; }
   .kanban .card-actions button {
     min-height: 44px;
-    padding: 10px 12px;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 5px;
+    white-space: nowrap;
     border-radius: 8px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     line-height: 1.3;
   }

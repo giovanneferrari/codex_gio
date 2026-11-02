@@ -102,7 +102,7 @@ Todas as migrations listadas acima estavam aplicadas em produção na última at
 O módulo de pedidos oferece:
 
 - Kanban e visualização em cards;
-- botões de retorno do Kanban identificam o destino (“← A preparar” ou “← Em preparo”); no celular, ações têm altura mínima de 44 px;
+- botões de retorno do Kanban identificam o destino (“← A preparar” ou “← Em preparo”); no celular, ações têm altura mínima de 44 px e ficam lado a lado em duas colunas iguais, com retorno à esquerda e avanço à direita;
 - etapas `A fazer`, `Em preparo` e `Finalizado`;
 - filtros por período, status, pagamento e produto;
 - atualização simultânea entre dispositivos por Supabase Realtime;

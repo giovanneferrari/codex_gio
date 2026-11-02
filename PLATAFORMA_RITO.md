@@ -234,6 +234,7 @@ O sistema possui:
 - datas de competência, vencimento e liquidação;
 - lançamentos recorrentes;
 - estoque e movimentações;
+- histórico de estoque com filtros Hoje, 7 dias, Este mês (padrão), Tudo e Personalizado, com contagem de movimentações; o filtro não altera os saldos dos insumos;
 - receitas de produtos e consumo automático;
 - ajustes e perdas;
 - conciliação de diferenças no encerramento de eventos.

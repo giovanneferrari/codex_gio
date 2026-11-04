@@ -27,8 +27,10 @@ function showSuccess(result){
   $('#cartBar').hidden=true;
   $('#successState').hidden=false;
   $('#successNumber').textContent=`#${String(result.order_number).padStart(4,'0')}`;
-  const pix=orderPixValue(result.pix_value,result.total,result.order_number);
+  const pixTotal=Number(result.total??result.confirmed_total??0);
+  const pix=orderPixValue(result.pix_value,pixTotal,result.order_number);
   $('#pixPayment').hidden=!pix;
+  $('#pixAmount').textContent=money(pixTotal);
   $('#pixValue').textContent=pix||'';
   $('#copyPix').textContent='Copiar Pix';
   $('#pixCopyError').hidden=true;

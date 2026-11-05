@@ -1,0 +1,25 @@
+.event-share-dialog {
+  padding: 25px 28px;
+}
+
+.event-share-dialog textarea {
+  margin-top: 20px;
+}
+
+.event-share-dialog .dialog-actions {
+  margin-top: 18px;
+}
+
+@media (max-width: 700px) {
+  .event-share-dialog {
+    padding: 20px;
+  }
+
+  .event-share-dialog textarea {
+    margin-top: 18px;
+  }
+
+  .event-share-dialog .dialog-actions {
+    margin-top: 16px;
+  }
+}

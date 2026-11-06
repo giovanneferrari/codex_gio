@@ -38,6 +38,7 @@ jobs:
           cp -R rev2 _site/rev2
           cp -R workshop _site/workshop
           cp -R pedir _site/pedir
+          cp -R teste _site/teste
 
       - name: Enviar os arquivos
         uses: actions/upload-pages-artifact@v3

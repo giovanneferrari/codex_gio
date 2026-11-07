@@ -134,3 +134,5 @@ h1,h2,h3{white-space:normal;text-wrap:pretty}h1 em,h2 em,h3 em{display:inline;ma
 }
 @media(prefers-reduced-motion:reduce){.mobile-card-turn,.mobile-card-shell{transition:none}}
 @media(max-width:700px){.mobile-card-shell[data-tier="2"] .drink-quantity input:checked+span{color:#f3efdf;border-color:#d2b574}.mobile-card-shell .drink-quantity>.pricing-note{display:none}.mobile-card-shell .pricing-controls>#volume-note{font-size:9px;margin:10px 0}.mobile-card-shell .pricing-controls>.pricing-note:last-of-type{font-size:9px;margin:10px 0}.mobile-card-shell .mobile-card-live{margin-bottom:12px}.mobile-card-shell .mobile-card-live img{height:70px}.mobile-card-shell .drink-quantity{margin-top:18px}.mobile-card-shell .cookie-option{margin-top:18px}}
+
+@media(max-width:700px){.mobile-card-shell{transition:none;overflow-anchor:none}.mobile-card-edit{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:50px;padding:15px 17px;margin:0 0 18px;border:1px solid #d2b574;border-radius:12px;background:#d2b574;color:#203a30;font:14px Arial;cursor:pointer}.mobile-card-edit:focus-visible{outline:2px solid currentColor;outline-offset:4px}}

@@ -30,8 +30,8 @@
  range.addEventListener('input',()=>render('range'));number.addEventListener('input',()=>{if(number.validity.valid&&number.value)render('number')});number.addEventListener('change',()=>{number.value=calculate(number.value,3,false).people;render('number')});document.querySelectorAll('input[name="drinks"]').forEach(input=>input.addEventListener('change',()=>render('range')));cookies.addEventListener('change',()=>render('range'));render('range');
  const shell=document.querySelector('.mobile-card-shell'),form=document.querySelector('.pricing-controls'),mobile=matchMedia('(max-width:700px)'),next=document.querySelector('.mobile-card-next'),edit=document.querySelector('.mobile-card-edit');
  let flipped=false;
- function fit(){if(mobile.matches)shell.style.height=(flipped?card:form).offsetHeight+'px';else shell.style.removeProperty('height')}
- function state(focus){shell.classList.toggle('is-flipped',mobile.matches&&flipped);form.inert=mobile.matches&&flipped;card.inert=mobile.matches&&!flipped;form.setAttribute('aria-hidden',String(mobile.matches&&flipped));card.setAttribute('aria-hidden',String(mobile.matches&&!flipped));fit();if(focus){shell.scrollIntoView({behavior:reduced.matches?'auto':'smooth',block:'start'});(flipped?edit:next).focus({preventScroll:true})}}
+ function fit(){if(mobile.matches)shell.style.height=Math.max(card.offsetHeight,form.offsetHeight)+'px';else shell.style.removeProperty('height')}
+ function state(focus){shell.classList.toggle('is-flipped',mobile.matches&&flipped);form.inert=mobile.matches&&flipped;card.inert=mobile.matches&&!flipped;form.setAttribute('aria-hidden',String(mobile.matches&&flipped));card.setAttribute('aria-hidden',String(mobile.matches&&!flipped));fit();if(focus){(flipped?edit:next).focus({preventScroll:true})}}
  next.addEventListener('click',()=>{flipped=true;state(true)});edit.addEventListener('click',()=>{flipped=false;state(true)});
  new ResizeObserver(fit).observe(form);new ResizeObserver(fit).observe(card);mobile.addEventListener('change',()=>state(false));window.addEventListener('resize',fit);state(false);
 })();

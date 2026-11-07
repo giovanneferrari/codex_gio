@@ -40,6 +40,7 @@ jobs:
           cp -R pedir _site/pedir
           cp -R teste _site/teste
           cp -R eventos _site/eventos
+          cp -R eventos-proposta _site/eventos-proposta
 
       - name: Enviar os arquivos
         uses: actions/upload-pages-artifact@v3

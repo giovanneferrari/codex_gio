@@ -419,3 +419,27 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
   #actionConfirmDialog .dialog-actions { display: flex; flex-direction: column; gap: 10px; }
   #actionConfirmDialog .dialog-actions button { width: 100%; min-height: 50px; padding: 14px 16px; font-size: 15px; }
 }
+
+#productGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#productGrid .compact-product { display: flex; flex-direction: column; gap: 0; padding: 0; min-width: 0; overflow: hidden; }
+.product-add { position: relative; flex: 1; width: 100%; min-width: 0; padding: 12px 10px; border: 0; background: transparent; color: var(--ink); text-align: left; cursor: pointer; }
+.product-add strong { padding-right: 28px; overflow-wrap: anywhere; }
+.product-add small { margin-top: 6px; }
+.product-quantity { position: absolute; top: 10px; right: 8px; min-width: 24px; padding: 3px; border-radius: 7px; background: #eee6dc; text-align: center; font-size: 12px; font-weight: 700; }
+.selected .product-quantity { background: #79583e; color: #fff; }
+.product-add-hint { display: block; margin-top: 8px; color: var(--coffee); font-size: 12px; }
+.product-clear { min-height: 36px; width: 100%; border: 0; border-top: 1px solid var(--line); background: transparent; color: var(--coffee); font: inherit; font-size: 12px; cursor: pointer; }
+.product-clear:disabled { color: var(--muted); opacity: .55; cursor: default; }
+.product-add:focus-visible, .product-clear:focus-visible { outline: 2px solid var(--coffee); outline-offset: -3px; }
+@media (max-width: 760px) {
+  #orderDialog { max-width: calc(100% - 24px); overflow-x: hidden; }
+  #orderForm { padding: 20px 16px; overflow-x: hidden; }
+  #orderForm fieldset, #orderForm label, #orderForm .dialog-head > div, #orderForm .form-row > *, #orderForm .order-meta-row > * { min-width: 0; }
+  #orderForm input, #orderForm select { min-width: 0; max-width: 100%; }
+  #orderForm .dialog-head { gap: 10px; }
+  #orderForm .dialog-head > button { flex-shrink: 0; }
+  #orderForm .dialog-head h2 { overflow-wrap: anywhere; }
+  #orderForm .payment-choices, #orderForm .status-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #orderForm .order-choice-buttons button { white-space: normal; overflow-wrap: anywhere; min-width: 0; }
+  #orderForm .product-clear { min-height: 44px; }
+}

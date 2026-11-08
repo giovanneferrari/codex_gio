@@ -420,6 +420,8 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
   #actionConfirmDialog .dialog-actions button { width: 100%; min-height: 50px; padding: 14px 16px; font-size: 15px; }
 }
 
+/* Custom order buttons own interaction; native selects only store form values. */
+#orderForm select.native-choice-hidden { display: none !important; }
 #productGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 #productGrid .compact-product { display: flex; flex-direction: column; gap: 0; padding: 0; min-width: 0; overflow: hidden; }
 .product-add { position: relative; flex: 1; width: 100%; min-width: 0; padding: 12px 10px; border: 0; background: transparent; color: var(--ink); text-align: left; cursor: pointer; }

@@ -422,6 +422,9 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
 
 /* Custom order buttons own interaction; native selects only store form values. */
 #orderForm select.native-choice-hidden { display: none !important; }
+.order-choice-group { min-width: 0; width: 100%; }
+.order-choice-title { display: block; font-size: 13px; font-weight: 600; }
+@media (max-width: 760px) { .order-choice-title { font-size: 15px; } }
 #productGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 #productGrid .compact-product { display: flex; flex-direction: column; gap: 0; padding: 0; min-width: 0; overflow: hidden; }
 .product-add { position: relative; flex: 1; width: 100%; min-width: 0; padding: 12px 10px; border: 0; background: transparent; color: var(--ink); text-align: left; cursor: pointer; }
@@ -438,6 +441,29 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
   #orderForm { padding: 20px 16px; overflow-x: hidden; }
   #orderForm fieldset, #orderForm label, #orderForm .dialog-head > div, #orderForm .form-row > *, #orderForm .order-meta-row > * { min-width: 0; }
   #orderForm input, #orderForm select { min-width: 0; max-width: 100%; }
+  #orderForm .order-meta-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #orderForm .order-meta-row input[type="date"],
+  #orderForm .order-meta-row input[type="time"] {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 10px 8px;
+    font-size: 16px;
+    overflow: hidden;
+  }
+  #orderForm .order-meta-row input::-webkit-date-and-time-value {
+    min-width: 0;
+    text-align: left;
+  }
+  #orderForm .order-meta-row input::-webkit-datetime-edit {
+    min-width: 0;
+    padding: 0;
+  }
   #orderForm .dialog-head { gap: 10px; }
   #orderForm .dialog-head > button { flex-shrink: 0; }
   #orderForm .dialog-head h2 { overflow-wrap: anywhere; }

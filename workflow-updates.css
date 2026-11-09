@@ -1,4 +1,13 @@
 .client-picker-trigger { display: block; width: 100%; margin-top: 7px; text-align: left; }
+.executive-period-options { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+.executive-period-options button { min-height: 44px; padding: 10px; border: 1px solid var(--line); border-radius: 9px; background: #f3eee7; color: var(--ink); font: inherit; cursor: pointer; }
+.executive-period-options button.active { background: #29221d; color: #fff; border-color: #29221d; }
+.period-all-months { margin-left: 12px; border: 0; background: transparent; color: var(--coffee); font: inherit; text-decoration: underline; cursor: pointer; }
+.crm-quick-stage { width: 100%; margin: 2px 0 14px; padding: 12px; border: 1px solid var(--line); border-radius: 9px; color: var(--coffee); background: #faf8f5; font: inherit; font-size: 12px; cursor: pointer; }
+#leadDetailStage { margin: 20px 0; }
+#prospectDetailDialog .dialog-actions { margin-top: 24px; gap: 12px; flex-wrap: wrap; }
+#leadStageOptions { margin: 24px 0; }
+#leadStageError { color: #a14839; }
 .client-picker-panel { margin-top: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; }
 .client-picker-panel input { width: 100%; min-width: 0; padding: 12px; font: inherit; }
 .client-picker-results { max-height: 230px; overflow-y: auto; margin-top: 8px; }

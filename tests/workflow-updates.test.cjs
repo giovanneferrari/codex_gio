@@ -4,6 +4,14 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const source = fs.readFileSync(require('node:path').join(__dirname,'../workflow-updates.js'),'utf8');
 function section(start,end){return source.slice(source.indexOf(start),source.indexOf(end,source.indexOf(start)))}
+test('executive multiselection excludes unselected months and years',()=>{
+  const context={};vm.createContext(context);
+  vm.runInContext(section('function matchesExecutiveSelection(', 'const multiFilteredOrders='),context);
+  const selection={years:[2024,2026],months:[0,2]};
+  for(const date of ['2024-01-10T12:00:00','2026-03-10T12:00:00'])assert.equal(context.matchesExecutiveSelection({createdAt:date},selection),true);
+  for(const date of ['2025-01-10T12:00:00','2026-02-10T12:00:00'])assert.equal(context.matchesExecutiveSelection({createdAt:date},selection),false);
+  assert.equal(context.matchesExecutiveSelection({createdAt:'2025-02-10T12:00:00'},null),true);
+});
 test('deployment includes every root script and stylesheet referenced by the application',()=>{
   const root=require('node:path').join(__dirname,'..');
   const html=fs.readFileSync(require('node:path').join(root,'index.html'),'utf8');

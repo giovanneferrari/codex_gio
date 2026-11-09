@@ -1,5 +1,5 @@
 .event-share-dialog {
-  padding: 25px 28px;
+  padding: 28px 28px 32px;
 }
 
 .event-share-dialog textarea {
@@ -7,12 +7,12 @@
 }
 
 .event-share-dialog .dialog-actions {
-  margin-top: 18px;
+  margin-top: 24px;
 }
 
 @media (max-width: 700px) {
   .event-share-dialog {
-    padding: 20px;
+    padding: 24px 20px 28px;
   }
 
   .event-share-dialog textarea {
@@ -20,6 +20,6 @@
   }
 
   .event-share-dialog .dialog-actions {
-    margin-top: 16px;
+    margin-top: 24px;
   }
 }

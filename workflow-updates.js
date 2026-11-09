@@ -90,23 +90,87 @@ renderPayments=function(data){
   if(fixedTotal){const row=document.createElement('div');row.className='payment-row';row.innerHTML=`<span>Contratos de valor fechado</span><b>${money(fixedTotal)}</b>`;$('#paymentBreakdown').append(row)}
 };
 
-// Filtro executivo por ano, mês ou datas, independente do financeiro.
+// Filtro executivo: anos e meses selecionados formam as combinações incluídas.
 $('#periodTabs [data-period="7d"]')?.remove();
-$('#periodTabs [data-period="custom"]').textContent='Ano / mês / data';
-document.body.insertAdjacentHTML('beforeend', `<dialog id="executivePeriodDialog" class="config-dialog"><form id="executivePeriodForm"><div class="dialog-head"><div><span>DESEMPENHO</span><h2>Filtrar período</h2></div><button type="button" data-close-executive aria-label="Fechar">×</button></div><div class="form-row"><label>Ano<input name="year" type="number" min="2000" max="2100" required></label><label>Mês<select name="month"><option value="">Todos os meses</option>${Array.from({length:12},(_,index)=>`<option value="${index}">${new Date(2026,index,1).toLocaleDateString('pt-BR',{month:'long'})}</option>`).join('')}</select></label></div><fieldset><legend>Ou selecione datas específicas</legend><div class="form-row"><label>Início<input type="date" name="start"></label><label>Fim<input type="date" name="end"></label></div></fieldset><p id="executivePeriodError" role="alert"></p><div class="dialog-actions"><button type="button" class="secondary" data-close-executive>Cancelar</button><button type="submit" class="primary">Aplicar filtro</button></div></form></dialog>`);
+$('#periodTabs [data-period="custom"]').textContent='Personalizado';
+let executiveSelection=null, draftYears=new Set(), draftMonths=new Set();
+function matchesExecutiveSelection(row,selection) {
+  if(!selection)return true;
+  const date=new Date(row.createdAt);
+  return selection.years.includes(date.getFullYear())&&selection.months.includes(date.getMonth());
+}
+const multiFilteredOrders=filteredOrders;
+filteredOrders=function(){return multiFilteredOrders().filter(row=>activePeriod!=='custom'||matchesExecutiveSelection(row,executiveSelection))};
+document.body.insertAdjacentHTML('beforeend', '<dialog id="executivePeriodDialog" class="config-dialog"><form id="executivePeriodForm"><div class="dialog-head"><div><span>PERÍODO PERSONALIZADO</span><h2>Filtrar desempenho</h2><p>Selecione um ou mais anos e meses, ou informe datas específicas.</p></div><button type="button" data-close-executive aria-label="Fechar">×</button></div><fieldset><legend>Anos</legend><div id="executiveYears" class="executive-period-options"></div></fieldset><fieldset><legend>Meses <button type="button" class="period-all-months">Todos os meses</button></legend><div id="executiveMonths" class="executive-period-options months"></div></fieldset><fieldset><legend>Ou use datas específicas</legend><div class="form-row"><label>Início<input type="date" name="start"></label><label>Fim<input type="date" name="end"></label></div></fieldset><p id="executivePeriodError" role="alert"></p><div class="dialog-actions"><button type="button" class="secondary" data-close-executive>Cancelar</button><button type="submit" class="primary">Aplicar filtro</button></div></form></dialog>');
+function renderExecutivePeriodOptions(){
+  const now=new Date().getFullYear();
+  const years=new Set([now-2,now-1,now,now+1,...draftYears,...orders.map(row=>new Date(row.createdAt).getFullYear()),...EVENTS.filter(row=>row.ends_at).map(row=>new Date(row.ends_at).getFullYear())]);
+  $('#executiveYears').innerHTML=[...years].filter(Number.isFinite).sort((a,b)=>b-a).map(year=>`<button type="button" data-year="${year}" aria-pressed="${draftYears.has(year)}" class="${draftYears.has(year)?'active':''}">${year}</button>`).join('');
+  $('#executiveMonths').innerHTML=Array.from({length:12},(_,month)=>`<button type="button" data-month="${month}" aria-pressed="${draftMonths.has(month)}" class="${draftMonths.has(month)?'active':''}">${new Date(2026,month,1).toLocaleDateString('pt-BR',{month:'short'}).replace('.','')}</button>`).join('');
+}
+function clearExecutiveDates(){const form=$('#executivePeriodForm');form.elements.start.value='';form.elements.end.value=''}
+$('#executiveYears').onclick=event=>{const button=event.target.closest('[data-year]');if(!button)return;const value=Number(button.dataset.year);draftYears.has(value)?draftYears.delete(value):draftYears.add(value);clearExecutiveDates();renderExecutivePeriodOptions()};
+$('#executiveMonths').onclick=event=>{const button=event.target.closest('[data-month]');if(!button)return;const value=Number(button.dataset.month);draftMonths.has(value)?draftMonths.delete(value):draftMonths.add(value);clearExecutiveDates();renderExecutivePeriodOptions()};
+$('.period-all-months').onclick=()=>{draftMonths=new Set(Array.from({length:12},(_,i)=>i));clearExecutiveDates();renderExecutivePeriodOptions()};
 const workflowPeriodClick=$('#periodTabs').onclick;
 $('#periodTabs').onclick=event=>{
   if(event.target.dataset.period!=='custom')return workflowPeriodClick(event);
-  const form=$('#executivePeriodForm'),base=customStart||new Date();form.reset();form.elements.year.value=base.getFullYear();form.elements.month.value=base.getMonth();$('#executivePeriodError').textContent='';$('#executivePeriodDialog').showModal();
+  const now=new Date(),form=$('#executivePeriodForm');form.reset();
+  draftYears=new Set(executiveSelection?.years||[now.getFullYear()]);draftMonths=new Set(executiveSelection?.months||[now.getMonth()]);
+  if(activePeriod==='custom'&&!executiveSelection&&customStart){form.elements.start.value=localDate(customStart);form.elements.end.value=localDate(customEnd)}
+  renderExecutivePeriodOptions();$('#executivePeriodError').textContent='';$('#executivePeriodDialog').showModal();
 };
 document.querySelectorAll('[data-close-executive]').forEach(button=>button.onclick=()=>$('#executivePeriodDialog').close());
 $('#executivePeriodForm').onsubmit=event=>{
-  event.preventDefault();const data=new FormData(event.currentTarget),year=Number(data.get('year')),month=data.get('month'),start=data.get('start'),end=data.get('end');
+  event.preventDefault();const data=new FormData(event.currentTarget),start=data.get('start'),end=data.get('end');
   if(end&&!start)return $('#executivePeriodError').textContent='Informe a data inicial.';
-  const a=start?new Date(`${start}T00:00:00`):new Date(year,month===''?0:Number(month),1),b=start?new Date(`${end||start}T23:59:59.999`):new Date(year,month===''?12:Number(month)+1,0,23,59,59,999);
+  if(!start&&(!draftYears.size||!draftMonths.size))return $('#executivePeriodError').textContent='Selecione pelo menos um ano e um mês.';
+  const years=[...draftYears].sort((a,b)=>a-b),months=[...draftMonths].sort((a,b)=>a-b);
+  const a=start?new Date(`${start}T00:00:00`):new Date(years[0],months[0],1);
+  const b=start?new Date(`${end||start}T23:59:59.999`):new Date(years.at(-1),months.at(-1)+1,0,23,59,59,999);
   if(b<a)return $('#executivePeriodError').textContent='O fim deve ser igual ou posterior ao início.';
-  customStart=a;customEnd=b;activePeriod='custom';chartGranularity=(b-a)>62*86400000?'month':'day';
+  executiveSelection=start?null:{years,months};customStart=a;customEnd=b;activePeriod='custom';
+  chartGranularity=(b-a)>62*86400000?'month':'day';
   document.querySelectorAll('#periodTabs button').forEach(button=>button.classList.toggle('active',button.dataset.period==='custom'));
   document.querySelectorAll('#chartGranularity button').forEach(button=>button.classList.toggle('active',button.dataset.granularity===chartGranularity));
   renderDashboard();$('#executivePeriodDialog').close();
+};
+
+// Atalho de status no card e na ficha comercial, sem abrir a edição.
+document.body.insertAdjacentHTML('beforeend','<dialog id="leadStageDialog" class="config-dialog"><form id="leadStageForm"><div class="dialog-head"><div><span>COMERCIAL</span><h2>Alterar status</h2><p id="leadStageName"></p></div><button type="button" data-close-lead-stage aria-label="Fechar">×</button></div><div id="leadStageOptions" class="executive-period-options"></div><p id="leadStageError" role="alert"></p><div class="dialog-actions"><button type="button" class="secondary" data-close-lead-stage>Cancelar</button><button type="submit" class="primary">Salvar status</button></div></form></dialog>');
+let quickLeadId=null,quickLeadStage=null,quickLeadSaving=false;
+function openLeadStage(id){
+  const item=PROSPECTS.find(row=>row.id===id);if(!item)return;
+  quickLeadId=id;quickLeadStage=item.stage;$('#leadStageName').textContent=item.company_name;$('#leadStageError').textContent='';
+  $('#leadStageOptions').innerHTML=Object.entries(CRM_STAGES).map(([value,label])=>`<button type="button" data-stage="${value}" aria-pressed="${value===item.stage}" class="${value===item.stage?'active':''}">${esc(label)}</button>`).join('');
+  $('#leadStageDialog').showModal();
+}
+$('#leadStageOptions').onclick=event=>{const button=event.target.closest('[data-stage]');if(!button)return;quickLeadStage=button.dataset.stage;$('#leadStageOptions').querySelectorAll('button').forEach(item=>{item.classList.toggle('active',item===button);item.setAttribute('aria-pressed',String(item===button))})};
+document.querySelectorAll('[data-close-lead-stage]').forEach(button=>button.onclick=()=>{if(!quickLeadSaving)$('#leadStageDialog').close()});
+$('#leadStageDialog').addEventListener('cancel',event=>{if(quickLeadSaving)event.preventDefault()});
+$('#leadStageForm').onsubmit=async event=>{
+  event.preventDefault();if(quickLeadSaving)return;const form=event.currentTarget,item=PROSPECTS.find(row=>row.id===quickLeadId);
+  if(!item||!CRM_STAGES[quickLeadStage])return;
+  quickLeadSaving=true;busy(form,true);
+  try{
+    if(!demoMode){const {error}=await db.from('commercial_prospects').update({stage:quickLeadStage}).eq('id',item.id);if(error)throw error}
+    item.stage=quickLeadStage;renderCommercial();
+    if($('#prospectDetailDialog').open&&selectedProspectDetailId===item.id){$('#prospectDetailDialog').close();openProspectDetail(item.id)}
+    $('#leadStageDialog').close();toast('Status atualizado.');
+  }catch(error){$('#leadStageError').textContent=message(error,'Não foi possível alterar o status.')}finally{quickLeadSaving=false;busy(form,false)}
+};
+const quickStageBoard=renderCommercialBoard;
+renderCommercialBoard=function(rows){
+  quickStageBoard(rows);
+  $('#crmBoard').querySelectorAll('[data-prospect-detail]').forEach(card=>{
+    const id=card.dataset.prospectDetail,item=PROSPECTS.find(row=>row.id===id),button=document.createElement('button');
+    button.type='button';button.className='crm-quick-stage';button.textContent=`${CRM_STAGES[item.stage]} · Alterar status`;button.onclick=()=>openLeadStage(id);card.after(button);
+  });
+};
+const quickStageDetail=openProspectDetail;
+openProspectDetail=function(id){
+  quickStageDetail(id);$('#leadDetailStage')?.remove();
+  const item=PROSPECTS.find(row=>row.id===id);if(!item)return;
+  const button=document.createElement('button');button.type='button';button.id='leadDetailStage';button.className='secondary';button.textContent=`Status: ${CRM_STAGES[item.stage]} · Alterar`;button.onclick=()=>openLeadStage(id);
+  $('#prospectDetailContent').before(button);
 };

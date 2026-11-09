@@ -4,6 +4,25 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const source = fs.readFileSync(require('node:path').join(__dirname,'../workflow-updates.js'),'utf8');
 function section(start,end){return source.slice(source.indexOf(start),source.indexOf(end,source.indexOf(start)))}
+test('deployment includes every root script and stylesheet referenced by the application',()=>{
+  const root=require('node:path').join(__dirname,'..');
+  const html=fs.readFileSync(require('node:path').join(root,'index.html'),'utf8');
+  const workflow=fs.readFileSync(require('node:path').join(root,'.github/workflows/deploy-pages.yml'),'utf8');
+  const copied=workflow.match(/cp (.+) _site\//)[1].split(/\s+/);
+  for(const match of html.matchAll(/(?:src|href)="([^"/?]+\.(?:js|css))(?:\?[^\"]*)?"/g)){
+    if(match[1]==='google-maps-config.js')continue;
+    assert.ok(copied.includes(match[1]),`Missing published asset: ${match[1]}`);
+  }
+});
+test('deferred form reset does not overwrite the saved schedule type',()=>{
+  const app=fs.readFileSync(require('node:path').join(__dirname,'../app.js'),'utf8');
+  const init=app.split('\n').find(line=>line.startsWith('function initScheduleTypeChoices()'));
+  let reset,queued;
+  const input={value:'Evento'},controls={dataset:{}};
+  const context={$:selector=>selector.includes('[name=')?input:selector.includes('schedule-type')?controls:{addEventListener:(name,fn)=>reset=fn},syncFinanceChoice:()=>{},syncScheduleBilling:()=>{},requestAnimationFrame:fn=>queued=fn,document:{querySelectorAll:()=>[]}};
+  vm.createContext(context);vm.runInContext(init,context);context.initScheduleTypeChoices();
+  reset();input.value='Outro';queued();assert.equal(input.value,'Outro');
+});
 test('event sales keep their payment method and only the per-person contract becomes event closing',()=>{
   let result;
   const context={EVENTS:[{id:'e1',billing_model:'consumption'},{id:'e2',billing_model:'per_person'}],orders:[{eventId:'e1',status:'Finalizado',value:80,paymentId:'pix'},{eventId:'e2',status:'Finalizado',value:20,paymentId:'card'}],workflowRenderPayments:rows=>result=rows};

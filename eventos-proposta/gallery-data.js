@@ -31,14 +31,14 @@ window.RITO_GALLERY = [
     "event": "Encontros Rito"
   },
   {
-    "src": "assets/gallery-cookies.jpg",
-    "alt": "Cookies e estrutura de preparo em um evento Rito",
-    "event": "Casa Sante"
+    "src": "assets/gallery-alna-estrutura.jpg",
+    "alt": "Carrinho Rito montado no evento da Alna, com cafés e equipamentos de preparo",
+    "event": "Alna × Rito"
   },
   {
-    "src": "assets/gallery-crossfox.jpg",
-    "alt": "Carrinho da Rito em atendimento no Crossfox",
-    "event": "Crossfox, Campinas"
+    "src": "assets/gallery-alna-atendimento.jpg",
+    "alt": "Equipe Rito conversando com uma convidada durante o evento da Alna",
+    "event": "Alna × Rito"
   },
   {
     "src": "assets/carrinho-real.jpg",

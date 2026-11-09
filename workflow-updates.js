@@ -159,14 +159,6 @@ $('#leadStageForm').onsubmit=async event=>{
     $('#leadStageDialog').close();toast('Status atualizado.');
   }catch(error){$('#leadStageError').textContent=message(error,'Não foi possível alterar o status.')}finally{quickLeadSaving=false;busy(form,false)}
 };
-const quickStageBoard=renderCommercialBoard;
-renderCommercialBoard=function(rows){
-  quickStageBoard(rows);
-  $('#crmBoard').querySelectorAll('[data-prospect-detail]').forEach(card=>{
-    const id=card.dataset.prospectDetail,item=PROSPECTS.find(row=>row.id===id),button=document.createElement('button');
-    button.type='button';button.className='crm-quick-stage';button.textContent=`${CRM_STAGES[item.stage]} · Alterar status`;button.onclick=()=>openLeadStage(id);card.after(button);
-  });
-};
 const quickStageDetail=openProspectDetail;
 openProspectDetail=function(id){
   quickStageDetail(id);$('#leadDetailStage')?.remove();

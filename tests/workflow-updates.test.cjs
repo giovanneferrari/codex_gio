@@ -4,6 +4,12 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const source = fs.readFileSync(require('node:path').join(__dirname,'../workflow-updates.js'),'utf8');
 function section(start,end){return source.slice(source.indexOf(start),source.indexOf(end,source.indexOf(start)))}
+test('lead status shortcut stays in the detail card without an external board button',()=>{
+  assert.ok(!source.includes('card.after(button)'));
+  assert.ok(!source.includes('crm-quick-stage'));
+  assert.ok(source.includes("button.id='leadDetailStage'"));
+  assert.ok(source.includes('button.onclick=()=>openLeadStage(id)'));
+});
 test('executive multiselection excludes unselected months and years',()=>{
   const context={};vm.createContext(context);
   vm.runInContext(section('function matchesExecutiveSelection(', 'const multiFilteredOrders='),context);

@@ -1,0 +1,25 @@
+.client-picker-trigger { display: block; width: 100%; margin-top: 7px; text-align: left; }
+.client-picker-panel { margin-top: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; }
+.client-picker-panel input { width: 100%; min-width: 0; padding: 12px; font: inherit; }
+.client-picker-results { max-height: 230px; overflow-y: auto; margin-top: 8px; }
+.client-picker-results button { display: block; width: 100%; min-height: 44px; padding: 10px; border: 0; background: transparent; color: var(--ink); text-align: left; font: inherit; }
+.client-picker-results button:hover, .client-picker-results button:focus-visible { background: #f3eee7; }
+#scheduleClientPicker { margin-top: 20px; }
+#finishPaymentOptions { margin: 20px 0; grid-template-columns: repeat(2,minmax(0,1fr)); }
+#finishPaymentError, #executivePeriodError { color: #a14839; }
+.operational-mode #newScheduleBtn { display: none; }
+.operational-mode #scheduleDialog .event-billing-field,
+.operational-mode #eventFinancialSummary { display: none !important; }
+@media(max-width:760px) {
+  #scheduleForm .form-row { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #scheduleForm .form-row > label { min-width: 0; }
+  #scheduleForm input[type="time"], #scheduleForm input[type="date"] {
+    appearance: none; -webkit-appearance: none; box-sizing: border-box;
+    display: block; width: 100%; max-width: 100%; min-width: 0; min-height: 44px;
+    padding: 10px 8px; font-size: 16px; overflow: hidden;
+  }
+  #scheduleForm input::-webkit-date-and-time-value { min-width: 0; text-align: left; }
+  #scheduleForm input::-webkit-datetime-edit { min-width: 0; padding: 0; }
+  #scheduleForm .schedule-type-row { grid-template-columns: minmax(0,1fr); }
+  #periodTabs { flex-wrap: wrap; }
+}

@@ -13,7 +13,7 @@ A entrada deriva do index principal a cada build e carrega os mesmos app.js, mó
 
 ## Limites desta entrega
 
-O Comercial das duas interfaces inclui a opção Diário. A migration `20261110190000_commercial_diary.sql` cria histórico individual, restrito a administradores, sem transformar observações antigas em contatos fictícios. A gravação e a atualização opcional da próxima ação são atômicas. O mesmo identificador de requisição impede duplicações por repetição. Clientes com histórico não podem ser excluídos fisicamente: use os status de stand-by para preservar seus registros. Histórico recarrega em Atualizar e ao retornar à janela; não há importação automática de mensagens do WhatsApp.
+O Comercial das duas interfaces abre no pipeline com filtros de prioridade e ficha lateral. A migration `20261110190000_commercial_diary.sql` cria histórico individual, restrito a administradores, sem transformar observações antigas em contatos fictícios. A gravação e a atualização opcional da próxima ação são atômicas. O mesmo identificador de requisição impede duplicações por repetição. Clientes com histórico não podem ser excluídos fisicamente: use os status de stand-by para preservar seus registros. Histórico recarrega em Atualizar e ao retornar à janela; não há importação automática de mensagens do WhatsApp.
 
 Validação do banco: executar `tests/commercial-diary.sql` no SQL Editor. O teste usa uma transação revertida ao final; verifica gravação, repetição, preservação do contexto, falha atômica, bloqueio anônimo e configuração de permissões. Não substitui teste visual com usuário real.
 
@@ -42,3 +42,14 @@ Voltar a usar `/` imediatamente; pedidos reais permanecem acessíveis. Para desa
 ## Testes
 
 `node --test tests/v3-live.test.cjs tests/v3-preview.test.cjs tests/workflow-updates.test.cjs preview-pedidos/resumo-model.test.cjs`
+
+
+## Comercial: prioridades e ações
+
+A migration `20261110210000_commercial_actions.sql` acrescenta assunto opcional aos contatos existentes, auditoria de alterações da próxima ação e funções de concluir/reagendar com verificação da versão do cliente. A interface exige assunto para contatos novos; os antigos exibem o início do texto como resumo. Etapas existentes não são renomeadas. Observações, eventos e edição cadastral continuam disponíveis na ficha.
+
+Os filtros consideram somente ações pendentes: Hoje pela data local, Atrasadas antes de hoje e Próximos 7 dias de amanhã até o sétimo dia. Sem próxima ação considera texto vazio; ações com texto e sem data aparecem em Todas com aviso. Contadores respeitam busca, etapa e contexto. O histórico de mudanças começa na ativação da migration; alterações anteriores não são reconstruídas.
+
+`tests/commercial-actions.sql` valida conclusão, reagendamento, repetição segura, bloqueio de versão antiga e leitura restrita a administradores numa transação revertida. As telas não enviam mensagens pelo WhatsApp automaticamente.
+
+Rollback visual: reverter somente os arquivos da interface, mantendo migrations aditivas e histórico. As funções anteriores permanecem disponíveis.

@@ -21,6 +21,11 @@ window.RITO_GALLERY = [
     "event": "O nosso café"
   },
   {
+    "src": "assets/gallery-alna-convidada.jpg",
+    "alt": "Convidada com Orange Coffee da Rito e bolsa Alna durante o evento",
+    "event": "Alna × Rito"
+  },
+  {
     "src": "assets/gallery-cappuccino.jpg",
     "alt": "Cappuccino servido no copo da Rito",
     "event": "Casa Sante"
@@ -31,13 +36,13 @@ window.RITO_GALLERY = [
     "event": "Encontros Rito"
   },
   {
-    "src": "assets/gallery-alna-estrutura.jpg",
-    "alt": "Carrinho Rito montado no evento da Alna, com cafés e equipamentos de preparo",
+    "src": "assets/gallery-alna-equipe.jpg",
+    "alt": "Equipe Rito sorrindo atrás do carrinho no evento da Alna",
     "event": "Alna × Rito"
   },
   {
-    "src": "assets/gallery-alna-atendimento.jpg",
-    "alt": "Equipe Rito conversando com uma convidada durante o evento da Alna",
+    "src": "assets/gallery-alna-orange-preparo.jpg",
+    "alt": "Preparo de Orange Coffee com espresso sendo servido sobre a bebida de laranja",
     "event": "Alna × Rito"
   },
   {

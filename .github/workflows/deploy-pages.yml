@@ -42,9 +42,9 @@ jobs:
           cp -R teste _site/teste
           cp -R eventos _site/eventos
           cp -R eventos-proposta _site/eventos-proposta
-          # Demonstração isolada: sem banco, autenticação ou dados reais.
-          mkdir -p _site/v3
-          cp preview-pedidos/*.html preview-pedidos/*.css preview-pedidos/*.js _site/v3/
+          # V3 real compartilha o app atual; a demonstração fica em /v3/demo/.
+          node --test tests/v3-live.test.cjs tests/v3-preview.test.cjs preview-pedidos/resumo-model.test.cjs
+          node v3/build.cjs _site/v3
 
       - name: Enviar os arquivos
         uses: actions/upload-pages-artifact@v3

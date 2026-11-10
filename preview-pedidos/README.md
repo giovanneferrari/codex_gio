@@ -1,12 +1,12 @@
 # RITO v3 — demonstração para validação
 
-Publicação: o fluxo existente do GitHub Pages copia os HTML, CSS e JS desta pasta para `/v3/`. O sistema da raiz não é substituído.
+Publicação: `v3/build.cjs` copia esta demonstração para `/v3/demo/`. A entrada `/v3/` agora é reservada à interface real, que compartilha o app de produção. O sistema da raiz não é substituído.
 
 ## Rotas após a publicação
 
-- `/v3/`: pedidos responsivos; no celular abre diretamente a visão mobile.
-- `/v3/celular.html`: moldura de celular para comparação no computador.
-- `/v3/resumo-evento.html`: resumo administrativo com exemplos independentes de venda e parceria.
+- `/v3/demo/`: pedidos fictícios responsivos; no celular abre diretamente a visão mobile.
+- `/v3/demo/celular.html`: moldura de celular para comparação no computador.
+- `/v3/demo/resumo-evento.html`: resumo administrativo com exemplos independentes de venda e parceria.
 
 ## Limites importantes
 

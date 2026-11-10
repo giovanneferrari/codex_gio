@@ -6,8 +6,9 @@ const root=path.join(__dirname,'..');
 const dir=path.join(root,'preview-pedidos');
 test('publicação da v3 adiciona uma pasta sem substituir a raiz',()=>{
  const workflow=fs.readFileSync(path.join(root,'.github/workflows/deploy-pages.yml'),'utf8');
- assert.ok(workflow.includes('mkdir -p _site/v3'));
- assert.ok(workflow.includes('cp preview-pedidos/*.html preview-pedidos/*.css preview-pedidos/*.js _site/v3/'));
+ assert.ok(workflow.includes('node v3/build.cjs _site/v3'));
+ const build=fs.readFileSync(path.join(root,'v3/build.cjs'),'utf8');
+ assert.ok(build.includes("path.join(target,'demo')"));
  assert.ok(workflow.includes('cp index.html styles.css app.js'));
 });
 test('links locais da prévia existem e HTML pede não indexação',()=>{

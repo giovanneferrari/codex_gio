@@ -1,4 +1,4 @@
-# V3 real — entrada gradual por Pedidos
+# V3 real — Pedidos e diário Comercial
 
 ## Arquitetura
 
@@ -12,6 +12,10 @@ A entrada deriva do index principal a cada build e carrega os mesmos app.js, mó
 - `/v3/demo/resumo-evento.html`: exemplos independentes de resumo; NÃO é relatório real.
 
 ## Limites desta entrega
+
+O Comercial das duas interfaces inclui a opção Diário. A migration `20261110190000_commercial_diary.sql` cria histórico individual, restrito a administradores, sem transformar observações antigas em contatos fictícios. A gravação e a atualização opcional da próxima ação são atômicas. O mesmo identificador de requisição impede duplicações por repetição. Clientes com histórico não podem ser excluídos fisicamente: use os status de stand-by para preservar seus registros. Histórico recarrega em Atualizar e ao retornar à janela; não há importação automática de mensagens do WhatsApp.
+
+Validação do banco: executar `tests/commercial-diary.sql` no SQL Editor. O teste usa uma transação revertida ao final; verifica gravação, repetição, preservação do contexto, falha atômica, bloqueio anônimo e configuração de permissões. Não substitui teste visual com usuário real.
 
 Não há migration nem nova regra financeira. Mantidos os modelos de cobrança existentes. Parceria automática e resumo financeiro novos permanecem apenas na demo. Mantida também a confirmação de finalização existente, quando aplicável, para não mudar regras operacionais nesta migração.
 

@@ -33,7 +33,7 @@ jobs:
         run: |
           python3 tools/sync_eventos.py
           mkdir -p _site
-          cp index.html styles.css app.js workshop-admin.css workshop-admin.js public-order-admin.js event-financials.css event-financials.js event-share-spacing.css workflow-updates.js workflow-updates.css workshop.html workshop.css workshop-overrides.css workshop.js .nojekyll _site/
+          cp index.html styles.css app.js commercial-diary.js commercial-diary.css workshop-admin.css workshop-admin.js public-order-admin.js event-financials.css event-financials.js event-share-spacing.css workflow-updates.js workflow-updates.css workshop.html workshop.css workshop-overrides.css workshop.js .nojekyll _site/
           printf "window.RITO_GOOGLE_MAPS_API_KEY='%s';\n" "$GOOGLE_MAPS_API_KEY" > _site/google-maps-config.js
           cp -R assets _site/assets
           cp -R rev2 _site/rev2

@@ -5,7 +5,7 @@ function liveHtml(source){
  if(!source.includes('workflow-updates.js')||!source.includes('id="orderForm"'))throw Error('Estrutura do sistema incompatível com a v3.');
  return source.replace('<head>','<head><base href="../"><meta name="robots" content="noindex, nofollow">')
   .replace('<title>RITO | Gestão da cafeteria</title>','<title>RITO v3 | Pedidos reais</title>')
-  .replace('</head>','<link rel="stylesheet" href="v3/live.css?v=1"></head>')
+  .replace('</head>','<link rel="stylesheet" href="v3/live.css?v=2"></head>')
   .replace('</body>','<script src="v3/order-view.js?v=1"></script><script src="v3/live.js?v=1"></script></body>');
 }
 function build(destination){

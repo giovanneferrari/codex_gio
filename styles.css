@@ -471,3 +471,5 @@ body.event-running #pedidos{margin:-18px;padding:18px;border:1px solid #d6b28d;b
   #orderForm .order-choice-buttons button { white-space: normal; overflow-wrap: anywhere; min-width: 0; }
   #orderForm .product-clear { min-height: 44px; }
 }
+
+#operationFilters{flex-wrap:wrap;gap:14px}#operationFilters label{display:grid;gap:7px;min-width:0;flex:1 1 200px}#operationFilters select{width:100%;min-width:0;min-height:44px;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff}#operationFilters>small{flex-basis:100%;color:var(--muted)}

@@ -43,7 +43,7 @@ jobs:
           cp -R eventos _site/eventos
           cp -R eventos-proposta _site/eventos-proposta
           # V3 real compartilha o app atual; a demonstração fica em /v3/demo/.
-          node --test tests/commercial-model.test.cjs tests/v3-live.test.cjs tests/v3-preview.test.cjs preview-pedidos/resumo-model.test.cjs
+          node --test tests/parallel-operations.test.cjs tests/commercial-model.test.cjs tests/v3-live.test.cjs tests/v3-preview.test.cjs preview-pedidos/resumo-model.test.cjs
           node v3/build.cjs _site/v3
 
       - name: Enviar os arquivos

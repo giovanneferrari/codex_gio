@@ -5,7 +5,7 @@ test('v3 mantém exatamente os scripts de produção e acrescenta só a camada v
  const source=read('index.html'),html=liveHtml(source);
  const scripts=s=>[...s.matchAll(/<script src="([^"]+)"/g)].map(m=>m[1]);
  assert.deepEqual(scripts(html).slice(0,-2),scripts(source));
- assert.deepEqual(scripts(html).slice(-2),['v3/order-view.js?v=1','v3/live.js?v=1']);
+ assert.deepEqual(scripts(html).slice(-2),['v3/order-view.js?v=1','v3/live.js?v=2-eventos']);
  assert.ok(html.includes('<base href="../">'));
  assert.ok(html.includes('id="orderForm"'));assert.ok(!html.includes('preview.js'));
  assert.ok(!source.includes('v3/live.js'));

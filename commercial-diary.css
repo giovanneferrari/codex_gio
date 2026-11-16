@@ -5,3 +5,6 @@
 /* Contextos comerciais: acomodar os três botões também no celular. */
 .crm-upgraded .crm-scope-toggle{display:flex;flex-wrap:wrap;max-width:100%;box-sizing:border-box}.crm-upgraded .crm-scope-toggle button{min-width:0;white-space:normal;min-height:44px}.crm-upgraded .crm-scope-toggle button span{overflow-wrap:anywhere}
 @media(max-width:760px){.crm-upgraded .crm-scope-toggle{gap:4px}.crm-upgraded .crm-scope-toggle button{padding:9px 6px;font-size:11px;gap:5px;flex:1 1 90px}}
+
+/* A ficha é o único contêiner de rolagem; o formulário cresce com o conteúdo. */
+.crm-client-drawer form{max-height:none;overflow:visible}

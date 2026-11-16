@@ -1,0 +1,10 @@
+const test=require('node:test'),assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs');
+const source=fs.readFileSync('app.js','utf8');
+function fixture(role='operator'){
+ const context={profile:{id:'u1',role},EVENTS:[{id:'a',status:'active',schedule_event_id:'sa'},{id:'b',status:'active',schedule_event_id:'sb'}],OPERATORS:[{id:'o1',profile_id:'u1'}],SCHEDULE:[{id:'sa',operatorIds:['o1']},{id:'sb',operatorIds:[]}],operationChoice:null,operatorOrderFilter:''};
+ vm.createContext(context);for(const name of ['availableOperationEvents','selectedOperationId','activeOperationEvent','operationOrderMatches'])vm.runInContext(source.split('\n').find(l=>l.startsWith('function '+name+'(')),context);return context;
+}
+test('operador entra no evento escalado, sem misturar pedidos',()=>{const c=fixture();assert.equal(c.selectedOperationId(),'a');assert.equal(c.operationOrderMatches({eventId:'a'}),true);assert.equal(c.operationOrderMatches({eventId:'b'}),false)});
+test('duas escalas exigem escolha e escolha encerrada não retorna evento fechado',()=>{const c=fixture();c.SCHEDULE[1].operatorIds=['o1'];assert.equal(c.selectedOperationId(),'');assert.equal(c.activeOperationEvent(),null);c.operationChoice='b';assert.equal(c.activeOperationEvent().id,'b');c.EVENTS[1].status='closed';assert.equal(c.activeOperationEvent().id,'a')});
+test('admin vê todos, filtro de autor independe de evento e nenhum evento é presumido',()=>{const c=fixture('admin');assert.equal(c.selectedOperationId(),'');c.operationChoice='all';assert.equal(c.activeOperationEvent(),null);assert.equal(c.operationOrderMatches({eventId:'b',createdBy:'u2'}),true);c.operatorOrderFilter='u1';assert.equal(c.operationOrderMatches({eventId:'b',createdBy:'u2'}),false);assert.equal(c.operationOrderMatches({eventId:'a',createdBy:'u1'}),true)});
+test('operador não consegue selecionar evento fora da escala ou visão geral',()=>{const c=fixture();c.operationChoice='all';assert.notEqual(c.selectedOperationId(),'all');c.operationChoice='b';assert.notEqual(c.selectedOperationId(),'b')});

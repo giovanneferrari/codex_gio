@@ -6,7 +6,7 @@ function liveHtml(source){
  return source.replace('<head>','<head><base href="../"><meta name="robots" content="noindex, nofollow">')
   .replace('<title>RITO | Gestão da cafeteria</title>','<title>RITO v3 | Pedidos reais</title>')
   .replace('</head>','<link rel="stylesheet" href="v3/live.css?v=2"></head>')
-  .replace('</body>','<script src="v3/order-view.js?v=1"></script><script src="v3/live.js?v=1"></script></body>');
+  .replace('</body>','<script src="v3/order-view.js?v=1"></script><script src="v3/live.js?v=2-eventos"></script></body>');
 }
 function build(destination){
  const target=path.resolve(destination);

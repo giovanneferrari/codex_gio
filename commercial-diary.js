@@ -48,5 +48,11 @@
   if(results[1].status==='fulfilled')log.innerHTML=results[1].value.map(r=>`<p><strong>${date(r.created_at)} · ${time(r.created_at)}</strong> — ${esc(r.author_name)}<br>${esc(r.previous_action||'Sem ação')} (${date(r.previous_date)}) → ${esc(r.next_action||'Ação encerrada')} (${date(r.next_date)})</p>`).join('')||'<p>Nenhuma movimentação registrada desde a ativação deste histórico.</p>';else log.textContent='Não foi possível carregar as movimentações.';
  }
  async function refresh(){if(saving||demoMode||profile?.role!=='admin')return;try{await loadData();paintAction();await loadHistory()}catch{toast('Não foi possível atualizar. Tente novamente.')}}
+ // Fecha apenas quando o gesto começa e termina fora da ficha.
+ let backdropPress=false;
+ function outsidePanel(e){const r=panel.getBoundingClientRect();return e.target===panel&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)}
+ panel.addEventListener('pointerdown',e=>{backdropPress=e.button===0&&outsidePanel(e)});
+ panel.addEventListener('pointercancel',()=>{backdropPress=false});
+ panel.addEventListener('click',e=>{const close=backdropPress&&outsidePanel(e);backdropPress=false;if(close&&!saving)panel.close()});
  panel.addEventListener('cancel',e=>{if(saving)e.preventDefault()});panel.addEventListener('close',()=>{loadSerial++;selectedId=null});window.addEventListener('focus',()=>{if(panel.open)refresh()});
 })();

@@ -10,6 +10,8 @@ test('agenda oferece evento pré-pago somente com valor fechado',()=>{
 });
 
 test('pedido interno pré-pago zera valor sem exigir pagamento ou justificativa',()=>{
+  assert.match(app,/prepaid\?'0\.00':''/);
+  assert.match(app,/readOnly=prepaid/);
   assert.match(app,/confirmedTotal=prepaid\?0:/);
   assert.match(app,/purpose=prepaid\?'sale'/);
   assert.match(app,/p_payment_method_id:prepaid\?null/);

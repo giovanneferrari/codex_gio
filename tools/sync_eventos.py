@@ -24,8 +24,9 @@ def sync():
     TARGET.mkdir(exist_ok=True)
     html = portfolio_html((SOURCE / 'index.html').read_text())
     (TARGET / 'index.html').write_text(html)
-    for name in ['style.css', 'experience.js', 'gallery-content.js', 'gallery-data.js', 'lab-gallery.js']:
+    for name in ['style.css', 'experience.js', 'gallery-content.js', 'gallery-data.js', 'lab-gallery.js', 'clientes.css', 'clientes.js']:
         shutil.copyfile(SOURCE / name, TARGET / name)
+    shutil.copytree(SOURCE / 'sections', TARGET / 'sections', dirs_exist_ok=True)
     shutil.copytree(SOURCE / 'assets', TARGET / 'assets', dirs_exist_ok=True)
     print('eventos synchronized; simulator remains exclusive to eventos-proposta.')
 

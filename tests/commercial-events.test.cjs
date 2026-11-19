@@ -7,3 +7,4 @@ test('confirmação cria compromisso na Agenda e mantém vínculo',()=>{assert.m
 test('registro de ação atualiza etapa e próximo passo de forma transacional',()=>{assert.match(sql,/record_commercial_event_followup/);assert.match(sql,/for update/);assert.match(sql,/next_action_on=p_next_date/)});
 test('evento pode ser descartado e reativado sem ser excluído',()=>{assert.match(js,/discardCommercialEvent/);assert.match(js,/restoring\?'new':'lost'/);assert.match(js,/Oportunidade reativada/)});
 test('cards de eventos mantêm respiro entre si e nas laterais',()=>{assert.match(css,/\.crm-event-column>div\{gap:12px;padding:3px\}/);assert.match(css,/margin:0 2px 4px/)});
+test('eventos são ordenados por data e podem ser filtrados pelo follow-up',()=>{assert.match(js,/a\.event_date\|\|'9999-12-31'/);assert.match(js,/crmEventFollowup/);assert.match(js,/Atrasados/);assert.match(js,/Em dia/);assert.match(js,/Sem retorno/)});

@@ -40,10 +40,11 @@ jobs:
           cp -R workshop _site/workshop
           cp -R pedir _site/pedir
           cp -R teste _site/teste
+          cp -R obrigado _site/obrigado
           cp -R eventos _site/eventos
           cp -R eventos-proposta _site/eventos-proposta
           # V3 real compartilha o app atual; a demonstração fica em /v3/demo/.
-          node --test tests/commercial-events.test.cjs tests/prepaid-events.test.cjs tests/parallel-operations.test.cjs tests/commercial-model.test.cjs tests/v3-live.test.cjs tests/v3-preview.test.cjs preview-pedidos/resumo-model.test.cjs
+          node --test tests/event-lead.test.cjs tests/commercial-events.test.cjs tests/prepaid-events.test.cjs tests/parallel-operations.test.cjs tests/commercial-model.test.cjs tests/v3-live.test.cjs tests/v3-preview.test.cjs preview-pedidos/resumo-model.test.cjs
           node v3/build.cjs _site/v3
 
       - name: Enviar os arquivos

@@ -1,2 +1,5 @@
 [functions.send-closing-whatsapp]
 verify_jwt = false
+
+[functions.event-lead]
+verify_jwt = false

@@ -3,7 +3,7 @@
   if (!form) return;
   const status = form.querySelector('.lead-status');
   const button = form.querySelector('[type="submit"]');
-  const whatsapp = form.querySelector('.lead-whatsapp');
+  const whatsapp = document.querySelector('.lead-whatsapp');
   const estimate = document.querySelector('#lead-estimate');
   const range = document.querySelector('#people-range');
   let busy = false;
@@ -17,9 +17,7 @@
     const quote = selection();
     if (!quote) return;
     requestId = crypto.randomUUID();
-    form.elements.people.value = quote.people;
-    form.elements.people.readOnly = true;
-    estimate.hidden = false;
+    estimate.hidden = true;
     estimate.textContent = `Sua simulação · 2 horas de serviço\n${quote.people} pessoas · ${quote.people * quote.drinks} bebidas · ${quote.cookies ? quote.people : 0} cookies\nTotal estimado: ${document.querySelector('#price-total').textContent}\nPara alterar as quantidades, ajuste a calculadora acima.`;
   }
   document.querySelector('.pricing-controls')?.addEventListener('input', refreshEstimate);
@@ -27,7 +25,7 @@
   refreshEstimate();
   function payload() {
     const data = Object.fromEntries(new FormData(form));
-    return {...data, people: Number(data.people), quote: selection(), source: location.pathname, requestId, startedAt};
+    return {...data, people: selection()?.people ?? null, quote: selection(), source: location.pathname, requestId, startedAt};
   }
   function updateWhatsApp() {
     const d = payload();
@@ -55,6 +53,6 @@
     } catch (_) {
       status.textContent = 'Não conseguimos confirmar o envio. Seus dados continuam aqui: tente novamente ou envie pelo WhatsApp.';
       updateWhatsApp();
-    } finally { busy = false; button.disabled = false; button.textContent = 'Pedir minha proposta'; }
+    } finally { busy = false; button.disabled = false; button.textContent = 'Quero receber um contato'; }
   });
 })();

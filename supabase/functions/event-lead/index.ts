@@ -21,9 +21,9 @@ Deno.serve(async req => {
     const raw = await req.text();
     if (raw.length > 12000) return reply(413, {ok:false});
     const d = JSON.parse(raw);
-    const name = clean(d.name), email = clean(d.email,180), phone = clean(d.phone,25), city = clean(d.city), eventType = clean(d.eventType), date = clean(d.date,10), people = Number(d.people);
-    if (d.website || !name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || /[\r\n]/.test(email) || phone.replace(/\D/g,'').length < 10 || !city || !eventType || !Number.isInteger(people) || people < 1 || people > 10000 || !['/eventos/','/eventos-proposta/'].includes(d.source) || !/^[0-9a-f-]{36}$/i.test(d.requestId) || !Number.isFinite(d.startedAt) || now-d.startedAt < 1500 || now-d.startedAt > 86400000) return reply(400, {ok:false});
-    const lines = ['NOVO PEDIDO DE PROPOSTA — RITO', `Nome: ${name}`, `E-mail: ${email}`, `WhatsApp: ${phone}`, `Evento: ${eventType}`, `Data: ${date || 'A definir'}`, `Cidade: ${city}`, `Pessoas: ${people}`, `Empresa: ${clean(d.company) || 'Não informada'}`];
+    const name = clean(d.name), email = clean(d.email,180), phone = clean(d.phone,25), city = clean(d.city), eventType = clean(d.eventType), date = clean(d.date,10), people = d.people == null ? null : Number(d.people);
+    if (d.website || !name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || /[\r\n]/.test(email) || phone.replace(/\D/g,'').length < 10 || (people !== null && (!Number.isInteger(people) || people < 1 || people > 10000)) || !['/eventos/','/eventos-proposta/'].includes(d.source) || !/^[0-9a-f-]{36}$/i.test(d.requestId) || !Number.isFinite(d.startedAt) || now-d.startedAt < 1500 || now-d.startedAt > 86400000) return reply(400, {ok:false});
+    const lines = ['NOVO PEDIDO DE PROPOSTA — RITO', `Nome: ${name}`, `E-mail: ${email}`, `WhatsApp: ${phone}`, `Evento: ${eventType || 'A combinar'}`, `Data: ${date || 'A definir'}`, `Cidade: ${city || 'A combinar'}`, `Pessoas: ${people ?? 'A combinar'}`, `Empresa: ${clean(d.company) || 'Não informada'}`];
     if (d.source === '/eventos-proposta/' && d.quote) {
       const q = d.quote;
       if (q.people !== people || people < 10 || people > 100 || ![1,2,3].includes(q.drinks) || typeof q.cookies !== 'boolean') return reply(400,{ok:false});

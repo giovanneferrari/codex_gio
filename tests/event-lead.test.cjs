@@ -26,3 +26,7 @@ test('rejects spam, invalid contacts and inconsistent quote',async()=>{
 });
 test('open quote works without simulator',async()=>{const data={...lead(150),source:'/eventos/',quote:null};assert.equal((await setup().send(data)).status,200)});
 test('disallows foreign origins',async()=>{assert.equal((await setup().handler(new Request('https://example.com',{method:'OPTIONS',headers:{origin:'https://other.example'}}))).status,403)});
+test('minimal contact accepts name, phone and email without event details',async()=>{
+ const data=lead();delete data.city;delete data.eventType;data.people=null;data.source='/eventos/';data.quote=null;
+ const api=setup();assert.equal((await api.send(data)).status,200);assert.ok(api.email().text.includes('Pessoas: A combinar'));
+});

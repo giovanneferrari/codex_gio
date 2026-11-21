@@ -8,15 +8,4 @@ gtag('js', new Date());
 </script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Pedido enviado | Rito Café</title><style>
 *{box-sizing:border-box}body{margin:0;background:#f3efdf;color:#244436;font:16px/1.6 Arial,sans-serif;min-height:100svh;display:grid;place-items:center;padding:28px}main{width:min(650px,100%);text-align:center}img{width:180px;margin-bottom:48px}small{letter-spacing:.15em}h1{font:clamp(42px,7vw,72px)/1.05 Georgia,serif;margin:24px 0}p{max-width:46ch;margin:24px auto}a{color:inherit;text-underline-offset:5px}.button{display:block;width:fit-content;margin:30px auto 20px;padding:15px 24px;background:#244436;color:#f3efdf;text-decoration:none;border-radius:8px}footer{font-size:13px;margin-top:52px;opacity:.7}
-</style></head><body><main><a href="/eventos/" aria-label="Rito Café — voltar ao site"><img src="/eventos/assets/rito-logo-alta.svg" alt="Rito Café"></a><small id="success-label">VAMOS CRIAR SEU PRÓXIMO RITO</small><h1 id="success-title">Seu encontro começa aqui.</h1><p id="success-copy">Quer levar a Rito para o seu evento? Conte pra gente o que você está planejando.</p><a class="button" href="https://wa.me/5511939231018?text=Ol%C3%A1!%20Quero%20conversar%20sobre%20meu%20evento." target="_blank" rel="noopener noreferrer">Conversar no WhatsApp</a><a id="return-link" href="/eventos/#contato">Voltar para o site</a><footer>Mais que café, um ritual.</footer></main><script>
-try {
- const success = JSON.parse(sessionStorage.getItem('rito-lead-success') || 'null');
- if (success && success.id && Date.now()-success.at >= 0 && Date.now()-success.at < 1800000) {
-  document.querySelector('#success-label').textContent='PEDIDO ENVIADO';
-  document.querySelector('#success-title').textContent='Agora, o próximo passo é com a gente.';
-  document.querySelector('#success-copy').textContent='Recebemos seu pedido de proposta. Vamos olhar os detalhes e entrar em contato pelo e-mail ou WhatsApp que você informou.';
-  document.querySelector('#return-link').href=success.source==='/eventos-proposta/'?'/eventos-proposta/':'/eventos/';
- }
-} catch (_) {}
-// A tag do Google será instalada após recebermos o ID real da conta.
-</script></body></html>
+</style></head><body><main><a href="/eventos/" aria-label="Rito Café — voltar ao site"><img src="/eventos/assets/rito-logo-alta.svg" alt="Rito Café"></a><small id="success-label">VAMOS CRIAR SEU PRÓXIMO RITO</small><h1 id="success-title">Seu encontro começa aqui.</h1><p id="success-copy">Quer levar a Rito para o seu evento? Conte pra gente o que você está planejando.</p><a class="button" href="https://wa.me/5511939231018?text=Ol%C3%A1!%20Quero%20conversar%20sobre%20meu%20evento." target="_blank" rel="noopener noreferrer">Conversar no WhatsApp</a><a id="return-link" href="/eventos/#contato">Voltar para o site</a><footer>Mais que café, um ritual.</footer></main><script src="conversion.js?v=1"></script></body></html>

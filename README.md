@@ -4,7 +4,8 @@ Dashboard responsivo e instalável para acompanhar operação, estoque e finanç
 
 ## Instalar como aplicativo
 
-- **iPhone/iPad:** abra `https://ritocafe.shop` no Safari, toque em **Compartilhar** e selecione **Adicionar à Tela de Início**.
+- **Plataforma:** acesse `https://ritocafe.shop/plataforma/`.
+- **iPhone/iPad:** abra `https://ritocafe.shop/plataforma/` no Safari, toque em **Compartilhar** e selecione **Adicionar à Tela de Início**.
 - **Android/desktop:** abra o site em um navegador compatível e escolha **Instalar RITO** no menu ou na barra de endereço.
 - A interface pode abrir a partir do cache sem conexão, mas alterações em pedidos, estoque e financeiro exigem internet para sincronizar com o Supabase.
 

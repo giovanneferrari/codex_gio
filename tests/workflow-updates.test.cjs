@@ -22,11 +22,23 @@ test('deployment includes every root script and stylesheet referenced by the app
   const root=require('node:path').join(__dirname,'..');
   const html=fs.readFileSync(require('node:path').join(root,'index.html'),'utf8');
   const workflow=fs.readFileSync(require('node:path').join(root,'.github/workflows/deploy-pages.yml'),'utf8');
-  const copied=workflow.match(/cp (.+) _site\//)[1].split(/\s+/);
+  const copied=workflow.match(/cp index\.html (.+) _site\/plataforma\//)[1].split(/\s+/);
+  copied.unshift('index.html');
   for(const match of html.matchAll(/(?:src|href)="([^"/?]+\.(?:js|css))(?:\?[^\"]*)?"/g)){
     if(match[1]==='google-maps-config.js')continue;
     assert.ok(copied.includes(match[1]),`Missing published asset: ${match[1]}`);
   }
+});
+test('produção separa site público e plataforma autenticada',()=>{
+  const root=require('node:path').join(__dirname,'..');
+  const redirect=fs.readFileSync(require('node:path').join(root,'root-redirect.html'),'utf8');
+  const manifest=JSON.parse(fs.readFileSync(require('node:path').join(root,'manifest.webmanifest'),'utf8'));
+  const workflow=fs.readFileSync(require('node:path').join(root,'.github/workflows/deploy-pages.yml'),'utf8');
+  assert.match(redirect,/location\.replace\('\/eventos\//);
+  assert.equal(manifest.start_url,'/plataforma/');
+  assert.equal(manifest.scope,'/plataforma/');
+  assert.match(workflow,/cp root-redirect\.html _site\/index\.html/);
+  assert.match(workflow,/index\.html styles\.css app\.js[\s\S]+_site\/plataforma\//);
 });
 test('deferred form reset does not overwrite the saved schedule type',()=>{
   const app=fs.readFileSync(require('node:path').join(__dirname,'../app.js'),'utf8');

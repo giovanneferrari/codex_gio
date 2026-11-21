@@ -32,10 +32,13 @@ jobs:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY || vars.GOOGLE_MAPS_API_KEY }}
         run: |
           python3 tools/sync_eventos.py
-          mkdir -p _site
-          cp index.html styles.css app.js commercial-model.js commercial-diary.js commercial-diary.css commercial-events.js commercial-events.css workshop-admin.css workshop-admin.js public-order-admin.js event-financials.css event-financials.js event-share-spacing.css workflow-updates.js workflow-updates.css workshop.html workshop.css workshop-overrides.css workshop.js .nojekyll _site/
-          printf "window.RITO_GOOGLE_MAPS_API_KEY='%s';\n" "$GOOGLE_MAPS_API_KEY" > _site/google-maps-config.js
+          mkdir -p _site/plataforma
+          cp root-redirect.html _site/index.html
+          cp .nojekyll _site/
+          cp index.html styles.css app.js commercial-model.js commercial-diary.js commercial-diary.css commercial-events.js commercial-events.css workshop-admin.css workshop-admin.js public-order-admin.js event-financials.css event-financials.js event-share-spacing.css workflow-updates.js workflow-updates.css workshop.html workshop.css workshop-overrides.css workshop.js manifest.webmanifest sw.js _site/plataforma/
+          printf "window.RITO_GOOGLE_MAPS_API_KEY='%s';\n" "$GOOGLE_MAPS_API_KEY" > _site/plataforma/google-maps-config.js
           cp -R assets _site/assets
+          cp -R assets _site/plataforma/assets
           cp -R rev2 _site/rev2
           cp -R workshop _site/workshop
           cp -R pedir _site/pedir
@@ -43,9 +46,9 @@ jobs:
           cp -R obrigado _site/obrigado
           cp -R eventos _site/eventos
           cp -R eventos-proposta _site/eventos-proposta
-          # V3 real compartilha o app atual; a demonstração fica em /v3/demo/.
+          # V3 real compartilha o app atual dentro da plataforma; a demonstração fica em /plataforma/v3/demo/.
           node --test tests/lead-conversion.test.cjs tests/event-lead.test.cjs tests/commercial-events.test.cjs tests/prepaid-events.test.cjs tests/parallel-operations.test.cjs tests/commercial-model.test.cjs tests/v3-live.test.cjs tests/v3-preview.test.cjs preview-pedidos/resumo-model.test.cjs
-          node v3/build.cjs _site/v3
+          node v3/build.cjs _site/plataforma/v3
 
       - name: Enviar os arquivos
         uses: actions/upload-pages-artifact@v3

@@ -4,9 +4,9 @@ const fs=require('node:fs');
 const path=require('node:path');
 const root=path.join(__dirname,'..');
 const dir=path.join(root,'preview-pedidos');
-test('publicação da v3 adiciona uma pasta sem substituir a raiz',()=>{
+test('publicação da v3 fica dentro da plataforma sem substituir a raiz pública',()=>{
  const workflow=fs.readFileSync(path.join(root,'.github/workflows/deploy-pages.yml'),'utf8');
- assert.ok(workflow.includes('node v3/build.cjs _site/v3'));
+ assert.ok(workflow.includes('node v3/build.cjs _site/plataforma/v3'));
  const build=fs.readFileSync(path.join(root,'v3/build.cjs'),'utf8');
  assert.ok(build.includes("path.join(target,'demo')"));
  assert.ok(workflow.includes('cp index.html styles.css app.js'));

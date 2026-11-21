@@ -10,7 +10,7 @@ function liveHtml(source){
 }
 function build(destination){
  const target=path.resolve(destination);
- if(target!==path.join(root,'v3')&&target!==path.join(root,'_site/v3'))throw Error('Destino deve ser v3 ou _site/v3.');
+ if(target!==path.join(root,'v3')&&target!==path.join(root,'_site/plataforma/v3'))throw Error('Destino deve ser v3 ou _site/plataforma/v3.');
  fs.mkdirSync(target,{recursive:true});
  fs.writeFileSync(path.join(target,'index.html'),liveHtml(fs.readFileSync(path.join(root,'index.html'),'utf8')));
  for(const name of ['live.css','live.js','order-view.js'])if(target!==__dirname)fs.copyFileSync(path.join(__dirname,name),path.join(target,name));
